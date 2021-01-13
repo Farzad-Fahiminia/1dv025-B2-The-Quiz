@@ -12,6 +12,7 @@ const template = document.createElement('template')
 template.innerHTML = `
   <style>
     .quiz-question {
+      margin: auto;
       max-width: 600px;
       font-size: 1.2em;
       padding: 3px 15px 15px 15px;
