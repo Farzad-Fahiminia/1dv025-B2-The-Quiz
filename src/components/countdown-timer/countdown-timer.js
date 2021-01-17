@@ -14,7 +14,7 @@ template.innerHTML = `
     .countdown-timer {
       margin: auto;
       max-width: 600px;
-      font-size: 1.2em;
+      font-size: 1em;
       padding: 3px 15px 15px 15px;
       background-color: #f7f7f7;
     }

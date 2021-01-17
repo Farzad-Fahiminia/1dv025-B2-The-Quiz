@@ -14,8 +14,11 @@ template.innerHTML = `
     .quiz-question {
       margin: auto;
       max-width: 600px;
-      font-size: 1.2em;
-      padding: 3px 15px 15px 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
+      padding: 20px 30px 40px 30px;
+      font-size: 1em;
       background-color: #f7f7f7;
     }
   </style>

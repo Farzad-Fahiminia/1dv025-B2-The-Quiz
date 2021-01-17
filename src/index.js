@@ -6,7 +6,7 @@
  */
 
 const messageContainer = document.querySelector('#messageContainer')
-const message = document.createTextNode('Hi from an ECMAScript Module.')
+const message = document.createTextNode('The best quiz game you ever played.')
 messageContainer.appendChild(message)
 
 // TODO: This is just some temple code that you are free to use, modify or completly delete. Add your code here instead.

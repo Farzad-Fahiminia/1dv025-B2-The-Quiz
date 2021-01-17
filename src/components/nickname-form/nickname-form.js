@@ -13,75 +13,75 @@ template.innerHTML = `
   <style>
     .nickname-form {
       margin: auto;
+      margin-top: 20px;
       margin-bottom: 20px;
       box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
-      padding: 20px 30px 40px 30px;
-      border-radius: 10px;
-      max-width: 400px;
-      font-size: 1.2em;
+      padding: 20px 40px 50px 40px;
+      border-radius: 4px;
+      max-width: 350px;
+      font-size: 1em;
       text-align: center;
-      background-color: #fff;
+      background-color: #222;
+      color: #fff;
+    }
+    h2 {
+      font-size: 2.2em;
+      font-style: italic;
     }
     input[type="text"] {
+      border: solid transparent 2px;
+      margin-top: 20px;
       margin-bottom: 10px;
-      padding: 10px;
+      padding: 13px;
       font-size: 1em;
+      text-align: center;
+      border-radius: 4px;
+      width: 196px
+    }
+    input[type="text"]:focus {
+      border: solid #ff5e5a 2px;
+    }
+    input[type="text"]::placeholder {
+      text-align: center;
+    }
+    input[type="text"]:focus::placeholder {
+      color: transparent;
     }
     input[type="button"],
     input[type="reset"],
     input[type="submit"] {
       cursor: pointer;
-      /* background-color: #333; */
       background-image: linear-gradient(-45deg, #ff5e5a, #ff405a);
-      padding: 15px 20px;
+      padding: 20px 20px;
       border: none;
-      border-radius: 5px;
-      font-size: 0.8em;
-      font-weight: 400;
+      border-radius: 4px;
+      font-size: 1em;
+      font-weight: 700;
+      font-style: italic;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #fff;
       -webkit-transition: all 0.2s;
       transition: all 0.2s;
+      width: 224px
     }
     input[type="button"]:hover, input[type="button"]:focus,
     input[type="reset"]:hover, input[type="reset"]:focus,
     input[type="submit"]:hover, input[type="submit"]:hover {
-      /* background-color: #f67e7d; */
-      /* background-image: linear-gradient(-45deg, #ff405a, #ff5e5a); */
       box-shadow: 0px 20px 50px rgba(255, 74, 89, 0.3);
     }
   </style>
   <div class="nickname-form">
-   <h2>Let's play a game!</h2>
-   <p>Compete in the quiz game by answering 7 questions correctly in the shortest amount of time.</p>
+   <h2>Let's play!</h2>
+   <p>Compete in the quiz game by answering questions correctly in the shortest amount of time.</p>
     <form action="#">
-      <label for="nickname">Choose a nickname:</label><br>
-      <input type="text" id="nickname" name="nickname" value="" required><br>
+      <!-- <label for="nickname">Choose a nickname:</label><br> -->
+      <input type="text" id="nickname" name="nickname" value="" placeholder="Enter a nickname" required><br>
       <input type="submit" value="Start game">
     </form>
   </div>
 `
 console.log(localStorage)
-
-// const nicknameForm = document.querySelector('form');
-// const nicknameInput = document.querySelector('[name="nickname"]');
-// const formFeedback = document.querySelector('#feedback');
-// const saveButton = document.querySelector('button');
-
-// nicknameForm.addEventListener('submit', event => {
-//   event.preventDefault();
-//   const nickname = nicknameInput.value;
-//   localStorage.setItem('nickname', nickname);
-//   formFeedback.textContent = 'Saved!';
-//   nicknameInput.setAttribute('disabled', true);
-//   saveButton.setAttribute('disabled', true);
-// });
-
-// const nicknameElement = document.querySelector('#nickname');
-// const nickname = localStorage.getItem('nickname');
-
-// nicknameElement.textContent = nickname;
 
 /**
  * Define custom element.
@@ -123,10 +123,13 @@ customElements.define('nickname-form',
     _onSubmit (event) {
       // Do not submit the form!
       event.preventDefault()
+      
+      localStorage.setItem('nickname', this._inputNickname.value)
+      localStorage.setItem('points', '')
 
-      if (this._inputNickname.value) {
-        localStorage.setItem('nickname', this._inputNickname.value)
-      }
+      // if (this._inputNickname.value) {
+      //   localStorage.setItem('nickname', this._inputNickname.value)
+      // }
 
       console.log(this._inputNickname.value)
     }
