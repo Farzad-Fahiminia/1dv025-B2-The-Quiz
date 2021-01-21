@@ -5,6 +5,8 @@
  * @version 1.0.0
  */
 
+import '../nickname-form'
+
  /**
  * Define template.
  */
@@ -13,15 +15,50 @@ template.innerHTML = `
   <style>
     .high-score {
       margin: auto;
-      max-width: 600px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
+      padding: 20px 40px 50px 40px;
+      border-radius: 4px;
+      max-width: 350px;
       font-size: 1em;
-      padding: 3px 15px 15px 15px;
-      background-color: #f7f7f7;
+      text-align: center;
+      background-color: #222;
+      color: #fff;
+    }
+    h2 {
+      font-size: 2.2em;
+    }
+    input[type="button"],
+    input[type="reset"],
+    input[type="submit"] {
+      cursor: pointer;
+      background-image: linear-gradient(-45deg, #ff5e5a, #ff405a);
+      padding: 20px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #fff;
+      -webkit-transition: all 0.2s;
+      transition: all 0.2s;
+      width: 224px
+    }
+    input[type="button"]:hover, input[type="button"]:focus,
+    input[type="reset"]:hover, input[type="reset"]:focus,
+    input[type="submit"]:hover, input[type="submit"]:hover {
+      box-shadow: 0px 20px 50px rgba(255, 74, 89, 0.3);
     }
   </style>
   <div class="high-score">
    <h2>High Score</h2>
    <p>Are you on the top 5 list?</p>
+   <form action="#">
+      <input type="submit" value="Play again!">
+    </form>
   </div>
 `
 
@@ -29,7 +66,7 @@ template.innerHTML = `
  * Define custom element.
  */
 customElements.define('high-score',
-  class extends HTMLElement {
+  class HighScore extends HTMLElement {
     /**
      * Creates an instance of the current type.
      */
@@ -40,6 +77,37 @@ customElements.define('high-score',
       // append the template to the shadow root.
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
+
+      // Array of players pushed in from nickname.
+      this.highScore = [23423423, 'high score']
+      console.log(this.highScore)
     }
+
+    getPlayer () {
+      // localStorage.getItem('quiz_highscore')
+      const player1 = window.localStorage.getItem('quiz_highscore')
+      console.log('Tom?', player1)
+    }
+
+    /**
+    * Called after the element is inserted into the DOM.
+    */
+    connectedCallback () {
+      this.getPlayer()
+    }
+
+    /**
+     * Called after the element has been removed from the DOM.
+     */
+    disconnectedCallback () {
+      
+    }
+
+    // // Add players to high score list
+    // set Score (player) {
+    //   // var player = JSON.parse(localStorage.getItem('quiz_higscore'))
+    //   this.highScore.push(player)
+    //   console.log('Displeyed in High Score:', this.highScore)
+    // }
   }
 )

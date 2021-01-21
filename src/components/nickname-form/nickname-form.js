@@ -5,6 +5,9 @@
  * @version 1.0.0
  */
 
+//  import { HighScore } from '../high-score.js'
+import '../high-score'
+
  /**
  * Define template.
  */
@@ -33,10 +36,11 @@ template.innerHTML = `
       margin-top: 20px;
       margin-bottom: 10px;
       padding: 13px;
-      font-size: 1em;
+      font-size: 1.2em;
+      font-weight: 700;
       text-align: center;
       border-radius: 4px;
-      width: 196px
+      width: 195px
     }
     input[type="text"]:focus {
       border: solid #ff5e5a 2px;
@@ -75,7 +79,6 @@ template.innerHTML = `
    <h2>Let's play!</h2>
    <p>Compete in the quiz game by answering questions correctly in the shortest amount of time.</p>
     <form action="#">
-      <!-- <label for="nickname">Choose a nickname:</label><br> -->
       <input type="text" id="nickname" name="nickname" value="" placeholder="Enter a nickname" required><br>
       <input type="submit" value="Start game">
     </form>
@@ -105,6 +108,14 @@ customElements.define('nickname-form',
 
       // Bind event handlers of child elements.
       this._onSubmit = this._onSubmit.bind(this)
+
+      this.arrayOfPlayers = []
+
+      this.person = {
+        nickname: '',
+        score: null
+      }
+      // this.playerScore = new HighScore()
     }
 
     /**
@@ -123,15 +134,28 @@ customElements.define('nickname-form',
     _onSubmit (event) {
       // Do not submit the form!
       event.preventDefault()
+
+      // localStorage.setItem('quiz_higscore', JSON.stringify({nickname: this._inputNickname.value, score: 0}))
+
+      // console.log('localStorage:',localStorage)
+
+      // this.arrayOfPlayers.push({nickname: this._inputNickname.value, score: 0})
+      // console.log(this.arrayOfPlayers)
+
+      // HighScore.Score(player)
+      // this.playerScore.setScore({nickname: this._inputNickname.value, score: 0})
       
-      localStorage.setItem('nickname', this._inputNickname.value)
-      localStorage.setItem('points', '')
+      const player = Object.create(this.person)
+      player.nickname = this._inputNickname.value
+      player.score = null
 
-      // if (this._inputNickname.value) {
-      //   localStorage.setItem('nickname', this._inputNickname.value)
-      // }
+      window.localStorage.setItem('quiz_highscore', JSON.stringify(player))
 
-      console.log(this._inputNickname.value)
+      console.log(player)
+      
+      // this.arrayOfPlayers.push(player)
+      // console.log(this.arrayOfPlayers)
+      
     }
 
     /**
