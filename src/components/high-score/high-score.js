@@ -79,21 +79,23 @@ customElements.define('high-score',
         .appendChild(template.content.cloneNode(true))
 
       // Array of players pushed in from nickname.
-      this.highScore = [23423423, 'high score']
+      this.highScore = []
       console.log(this.highScore)
     }
 
-    getPlayer () {
+    getPlayers () {
       // localStorage.getItem('quiz_highscore')
-      const player1 = window.localStorage.getItem('quiz_highscore')
-      console.log('Tom?', player1)
+      const player = JSON.parse(localStorage.getItem('quiz_highscore'))
+      console.log('Tom?', player)
+      this.highScore.push(player)
+      console.log('High Score:', this.highScore)
     }
 
     /**
     * Called after the element is inserted into the DOM.
     */
     connectedCallback () {
-      this.getPlayer()
+      this.getPlayers()
     }
 
     /**

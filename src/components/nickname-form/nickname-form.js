@@ -113,7 +113,7 @@ customElements.define('nickname-form',
 
       this.person = {
         nickname: '',
-        score: null
+        score: 0
       }
       // this.playerScore = new HighScore()
     }
@@ -141,9 +141,6 @@ customElements.define('nickname-form',
 
       // this.arrayOfPlayers.push({nickname: this._inputNickname.value, score: 0})
       // console.log(this.arrayOfPlayers)
-
-      // HighScore.Score(player)
-      // this.playerScore.setScore({nickname: this._inputNickname.value, score: 0})
       
       const player = Object.create(this.person)
       player.nickname = this._inputNickname.value
@@ -153,8 +150,8 @@ customElements.define('nickname-form',
 
       console.log(player)
       
-      // this.arrayOfPlayers.push(player)
-      // console.log(this.arrayOfPlayers)
+      this.arrayOfPlayers.push(player)
+      console.log('Array of players:', this.arrayOfPlayers)
       
     }
 
