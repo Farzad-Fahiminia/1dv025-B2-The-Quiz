@@ -144,7 +144,7 @@ customElements.define('nickname-form',
       
       const player = Object.create(this.person)
       player.nickname = this._inputNickname.value
-      player.score = null
+      player.score = 0
 
       window.localStorage.setItem('quiz_highscore', JSON.stringify(player))
 

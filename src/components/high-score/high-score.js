@@ -56,6 +56,7 @@ template.innerHTML = `
   <div class="high-score">
    <h2>High Score</h2>
    <p>Are you on the top 5 list?</p>
+   <slot></slot>
    <form action="#">
       <input type="submit" value="Play again!">
     </form>
@@ -89,6 +90,17 @@ customElements.define('high-score',
       console.log('Tom?', player)
       this.highScore.push(player)
       console.log('High Score:', this.highScore)
+
+      const elem = document.querySelector('high-score')
+         
+      // create a <p> element
+      const p = document.createElement('p')
+         
+      // add <p> to the shadow DOM
+      elem.appendChild(p)
+         
+      // add text to <p> 
+      p.textContent = `${player.nickname}: ${player.score} sec`
     }
 
     /**

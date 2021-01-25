@@ -70,16 +70,16 @@ customElements.define('quiz-question',
       // const question = this.shadowRoot.createTextNode('Test')
       // questionContainer.appendChild(question)
 
-      const elem = document.querySelector('quiz-question');
+      const elem = document.querySelector('quiz-question')
          
       // create a <p> element
-      const h2 = document.createElement('h2');
+      const h2 = document.createElement('h2')
          
       // add <p> to the shadow DOM
-      elem.appendChild(h2);
+      elem.appendChild(h2)
          
       // add text to <p> 
-      h2.textContent = 'Hello!';
+      h2.textContent = show
 
 
       return show.json()
