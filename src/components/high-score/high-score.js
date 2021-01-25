@@ -56,6 +56,7 @@ template.innerHTML = `
   <div class="high-score">
    <h2>High Score</h2>
    <p>Are you on the top 5 list?</p>
+   <p>--------------------------</p>
    <slot></slot>
    <form action="#">
       <input type="submit" value="Play again!">

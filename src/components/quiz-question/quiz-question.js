@@ -24,12 +24,13 @@ template.innerHTML = `
       background-color: #222;
       color: #fff;
     }
-    h2 {
+    ::slotted(h2) {
       font-size: 2.2em;
+      text-transform: none !important;
     }
   </style>
   <div class="quiz-question">
-   <h2 id="question-h2">Quiz question</h2>
+   <!-- <h2 id="question-h2">Quiz question</h2> -->
    <slot></slot>
    <p>Show the question here.</p>
   </div>
@@ -51,10 +52,6 @@ customElements.define('quiz-question',
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
       
-      // this.questionContainer = this.shadowRoot.querySelector('p')
-      // this.question = this.shadowRoot.createTextNode('"The best quiz game you ever played."')
-      // this.questionContainer.appendChild(this.question)
-
       this.nextUrl = ''
       this._answerUrl = 'http://courselab.lnu.se/answer/'
       this._questionUrl = 'http://courselab.lnu.se/question/'
@@ -63,41 +60,46 @@ customElements.define('quiz-question',
     async getQuestion (id) {
       console.log('Syns frågan på getQuestion?')
 
-      const show = await window.fetch('http://courselab.lnu.se/question/1')
-      console.log(show)
+      // const quizObj = await window.fetch('http://courselab.lnu.se/question/1')
+      // console.log(quizObj)
+      // return quizObj.json()
 
-      // const questionContainer = this.shadowRoot.querySelector('p')
-      // const question = this.shadowRoot.createTextNode('Test')
-      // questionContainer.appendChild(question)
+      let data = await window.fetch('http://courselab.lnu.se/question/1', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        // body: JSON.stringify(data)
+      })
+      data = await data.json()
+
+      console.log('DATA', data)
 
       const elem = document.querySelector('quiz-question')
-         
       // create a <p> element
       const h2 = document.createElement('h2')
-         
       // add <p> to the shadow DOM
       elem.appendChild(h2)
-         
       // add text to <p> 
-      h2.textContent = show
+      h2.textContent = data.question
 
-
-      return show.json()
-
-      // let res = await window.fetch('http://courselab.lnu.se/question/1', {
-      //   method: 'GET',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(res)
-      // })
-      // res = await res.json()
-
-      // console.log(res)
+      // console.log(data.question)
     }
 
     async sendAnswer (id) {
       console.log('Syns svaret?')
+
+      // let data = await window.fetch('http://courselab.lnu.se/answer/1', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   // body: JSON.stringify(data)
+      // })
+      // data = await data.json()
+      // body: JSON.stringify(data)
+
+      // console.log('POST DATA', data)
 
       // let data = await window.fetch(`${this._answerUrl}${id}`, {
       //   method: 'POST',
@@ -107,6 +109,8 @@ customElements.define('quiz-question',
       //   body: JSON.stringify(data)
       // })
       // data = await data.json()
+
+      // console.log('DATA', data)
 
       // const data = {
       //   id: 54322575,
