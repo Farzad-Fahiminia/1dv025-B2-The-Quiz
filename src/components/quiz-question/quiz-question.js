@@ -32,7 +32,7 @@ template.innerHTML = `
   <div class="quiz-question">
    <!-- <h2 id="question-h2">Quiz question</h2> -->
    <slot></slot>
-   <p>Show the question here.</p>
+   <p>Show the alternatives here.</p>
   </div>
 `
 
@@ -51,6 +51,8 @@ customElements.define('quiz-question',
       // append the template to the shadow root.
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
+
+      this.question = { answer: '2' }
       
       this.nextUrl = ''
       this._answerUrl = 'http://courselab.lnu.se/answer/'
@@ -78,9 +80,9 @@ customElements.define('quiz-question',
       const elem = document.querySelector('quiz-question')
       // create a <p> element
       const h2 = document.createElement('h2')
-      // add <p> to the shadow DOM
+      // add <h2> to the shadow DOM
       elem.appendChild(h2)
-      // add text to <p> 
+      // add text to <h2> 
       h2.textContent = data.question
 
       // console.log(data.question)
@@ -89,17 +91,17 @@ customElements.define('quiz-question',
     async sendAnswer (id) {
       console.log('Syns svaret?')
 
-      // let data = await window.fetch('http://courselab.lnu.se/answer/1', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   // body: JSON.stringify(data)
-      // })
-      // data = await data.json()
-      // body: JSON.stringify(data)
+      let data = await window.fetch('http://courselab.lnu.se/answer/1', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.question)
+      })
+      data = await data.json()
 
-      // console.log('POST DATA', data)
+      console.log('POST DATA', data)
+
 
       // let data = await window.fetch(`${this._answerUrl}${id}`, {
       //   method: 'POST',
