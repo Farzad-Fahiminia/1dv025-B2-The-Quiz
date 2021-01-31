@@ -138,7 +138,7 @@ customElements.define('quiz-question',
       // let data = await window.fetch('http://courselab.lnu.se/answer/1', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(this.question)
       })
@@ -148,8 +148,8 @@ customElements.define('quiz-question',
       console.log('POST DATA', data)
       console.log('SEND ANSWER: ', this.question.answer)
 
-      // this._questionUrl = JSON.stringify(data.nextURL)
-      this._questionUrl = 'http://courselab.lnu.se/question/21'
+      this._questionUrl = data.nextURL
+      // this._questionUrl = 'http://courselab.lnu.se/question/21'
 
       this.getQuestion(this._questionUrl)
       console.log('POST DATA ID', this._questionUrl)
