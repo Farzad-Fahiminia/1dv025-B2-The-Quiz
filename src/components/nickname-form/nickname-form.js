@@ -126,8 +126,8 @@ customElements.define('nickname-form',
     async _onInput (event) {
       if (!(event instanceof InputEvent)) {
         // Close the datalist.
-        this._inputSearchElement.blur()
-        this._inputSearchElement.focus()
+        this._inputNickname.blur()
+        this._inputNickname.focus()
       }
     }
 

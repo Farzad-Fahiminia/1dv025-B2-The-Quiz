@@ -33,6 +33,10 @@ template.innerHTML = `
    <!-- <h2 id="question-h2">Quiz question</h2> -->
    <slot></slot>
    <p>Show the alternatives here.</p>
+   <form action="#">
+      <input type="text" id="quiz-answer" name="quiz-answer" value="" required><br>
+      <input type="submit" value="Submit answer">
+    </form>
   </div>
 `
 
@@ -52,30 +56,47 @@ customElements.define('quiz-question',
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
 
-      this.question = { answer: '2' }
+      // Get the input, datalist and article elements in the shadow root.
+      this._inputAnswer = this.shadowRoot.querySelector('#quiz-answer')
+      this._formElement = this.shadowRoot.querySelector('form')
+
+      // Bind event handlers of child elements.
+      this._onSubmit = this._onSubmit.bind(this)
+
+      this.question = { answer: '' }
       
-      this.nextUrl = ''
+      // this.id = '1'
+      // this.nextUrl = ''
       this._answerUrl = 'http://courselab.lnu.se/answer/'
-      this._questionUrl = 'http://courselab.lnu.se/question/'
+      this._questionUrl = 'http://courselab.lnu.se/question/1'
     }
 
-    async getQuestion (id) {
+    /**
+     * Handles input event.
+     *
+     * @param {InputEvent|Event} event - The input event.
+     */
+    async _onInput (event) {
+      if (!(event instanceof InputEvent)) {
+        // Close the datalist.
+        this._inputAnswer.blur()
+        this._inputAnswer.focus()
+      }
+    }
+
+    async getQuestion (_questionUrl) {
       console.log('Syns frågan på getQuestion?')
 
-      // const quizObj = await window.fetch('http://courselab.lnu.se/question/1')
-      // console.log(quizObj)
-      // return quizObj.json()
-
-      let data = await window.fetch('http://courselab.lnu.se/question/1', {
+      let data = await window.fetch(`${this._questionUrl}`, {
+      // let data = await window.fetch(`${this._questionUrl}${id}`, {
+      // let data = await window.fetch('http://courselab.lnu.se/question/1', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         },
-        // body: JSON.stringify(data)
+        // body: JSON.stringify(this.question)
       })
       data = await data.json()
-
-      console.log('DATA', data)
 
       const elem = document.querySelector('quiz-question')
       // create a <p> element
@@ -85,12 +106,34 @@ customElements.define('quiz-question',
       // add text to <h2> 
       h2.textContent = data.question
 
+      console.log('DATA', data)
       // console.log(data.question)
+
+      console.log(data.id)
     }
 
-    async sendAnswer (id) {
+    _onSubmit (event) {
+      // Do not submit the form!
+      event.preventDefault()
+
+      this.question.answer = this._inputAnswer.value
+      this.postAnswer()
+
+      // console.log(data.id)
+      // this.getQuestion(data.id)
+
+          // Get and render the selected article.
+          // this.question.answer = this.postAnswer(this._inputAnswer.value)
+          // this._renderArticleExtract(article)
+
+      // this.question.answer = this._inputAnswer.value
+      console.log('HÄÄÄÄR: ', this.question)
+    }
+
+    async postAnswer (id) {
       console.log('Syns svaret?')
 
+      // let data = await window.fetch(`${this._answerUrl}${id}`, {
       let data = await window.fetch('http://courselab.lnu.se/answer/1', {
         method: 'POST',
         headers: {
@@ -100,44 +143,26 @@ customElements.define('quiz-question',
       })
       data = await data.json()
 
+      // console.log('POST ID', data.id)
       console.log('POST DATA', data)
+      console.log('SEND ANSWER: ', this.question.answer)
 
+      // this._questionUrl = JSON.stringify(data.nextURL)
+      this._questionUrl = 'http://courselab.lnu.se/question/21'
 
-      // let data = await window.fetch(`${this._answerUrl}${id}`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(data)
-      // })
-      // data = await data.json()
+      this.getQuestion(this._questionUrl)
+      console.log('POST DATA ID', this._questionUrl)
 
-      // console.log('DATA', data)
-
-      // const data = {
-      //   id: 54322575,
-      //   name: 'Johan'
-      // }
-
-      // let result = await window.fetch(http://courselab.lnu.se/question/1, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(data)
-      // }).then(res => {
-      //   // Process the response here
-      // }).catch(error => {
-      //   // Handle errors here
-      // })
     }
 
     /**
     * Called after the element is inserted into the DOM.
     */
     connectedCallback () {
+      this._inputAnswer.addEventListener('input', this._onInput)
+      this._formElement.addEventListener('submit', this._onSubmit)
       this.getQuestion()
-      this.sendAnswer()
+      // this.postAnswer()
     }
 
     /**

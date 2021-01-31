@@ -10,11 +10,11 @@ import '../quiz-question'
 import '../countdown-timer'
 import '../high-score'
 
-console.log('Lägg all spel här!')
+// console.log('Lägg all spel här!')
 
 export default class Game extends window.HTMLElement {
   constructor () {
     super()
-    
+
   }
 }
