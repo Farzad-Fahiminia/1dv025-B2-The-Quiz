@@ -65,7 +65,7 @@ customElements.define('quiz-question',
 
       this.question = { answer: '' }
       
-      // this.id = '1'
+      this.id = ''
       // this.nextUrl = ''
       this._answerUrl = 'http://courselab.lnu.se/answer/'
       this._questionUrl = 'http://courselab.lnu.se/question/1'
@@ -109,6 +109,7 @@ customElements.define('quiz-question',
       console.log('DATA', data)
       // console.log(data.question)
 
+      this.id = data.id
       console.log(data.id)
     }
 
@@ -117,7 +118,7 @@ customElements.define('quiz-question',
       event.preventDefault()
 
       this.question.answer = this._inputAnswer.value
-      this.postAnswer()
+      this.postAnswer(this.id)
 
       // console.log(data.id)
       // this.getQuestion(data.id)
@@ -133,8 +134,8 @@ customElements.define('quiz-question',
     async postAnswer (id) {
       console.log('Syns svaret?')
 
-      // let data = await window.fetch(`${this._answerUrl}${id}`, {
-      let data = await window.fetch('http://courselab.lnu.se/answer/1', {
+      let data = await window.fetch(`${this._answerUrl}${id}`, {
+      // let data = await window.fetch('http://courselab.lnu.se/answer/1', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
