@@ -5,7 +5,8 @@
  * @version 1.0.0
  */
 
-import '../nickname-form'
+import '../my-hello/my-hello'
+import '../nickname-form/'
 import '../quiz-question'
 import '../countdown-timer'
 import '../high-score'
