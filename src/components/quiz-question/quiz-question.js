@@ -115,6 +115,8 @@ customElements.define('quiz-question',
       // add text to <h2> 
       h2.textContent = data.question
 
+      this.setAttribute('message', data.question)
+
       if (data.alternatives) {
         console.log('Det finns alternativ!')
         console.log(Object.keys(data.alternatives).length)
