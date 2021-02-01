@@ -18,16 +18,22 @@ template.innerHTML = `
       box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
       padding: 20px 40px 50px 40px;
       border-radius: 4px;
-      max-width: 600px;
+      max-width: 650px;
       font-size: 1em;
       text-align: center;
       background-color: #222;
       color: #fff;
     }
-    ::slotted(h2) {
+    .message-board {
+      margin-top: 20px;
       font-size: 2.2em;
+      font-weight: 700;
       text-transform: none !important;
     }
+    /* ::slotted(h2) {
+      font-size: 2.2em;
+      text-transform: none !important;
+    } */
   </style>
   <div class="quiz-question">
   <div class="message-board"></div>
@@ -107,13 +113,13 @@ customElements.define('quiz-question',
       })
       data = await data.json()
 
-      const elem = document.querySelector('quiz-question')
-      // create a <h2> element
-      const h2 = document.createElement('h2')
-      // add <h2> to the shadow DOM
-      elem.appendChild(h2)
-      // add text to <h2> 
-      h2.textContent = data.question
+      // const elem = document.querySelector('quiz-question')
+      // // create a <h2> element
+      // const h2 = document.createElement('h2')
+      // // add <h2> to the shadow DOM
+      // elem.appendChild(h2)
+      // // add text to <h2> 
+      // h2.textContent = data.question
 
       this.setAttribute('message', data.question)
 
