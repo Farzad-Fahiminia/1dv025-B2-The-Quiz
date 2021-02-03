@@ -81,11 +81,11 @@ template.innerHTML = `
   </style>
   <div class="quiz-question">
     <div class="message-board"></div>
-    <slot></slot>
     <p>Show the alternatives here.</p>
     <form action="#" id="quiz-form">
-      <!-- <input type="radio" name="choice" value="yes"> Alternativ -->
-      <input type="text" id="quiz-answer" name="quiz-answer" value="" required><br>
+      <!-- <input type="radio" name="choice" value="alt3"> Alternativ -->
+      <slot></slot>
+      <input type="text" id="quiz-answer" name="quiz-answer" value=""><br>
       <input type="submit" value="Submit answer">
     </form>
   </div>
@@ -172,18 +172,20 @@ customElements.define('quiz-question',
 
       if (data.alternatives) {
         // this.document.querySelector('#quiz-answer').style.visibility = "hidden"
+        this._inputAnswer.style.display = "none"
 
         console.log('Det finns alternativ!')
         console.log(Object.keys(data.alternatives).length)
 
         // form.innerHTML = `<button>Syns detta?</button>`
         const radioButtonsLength = Object.keys(data.alternatives).length
-        let radiobuttons = `<input type="radio" name="choice" value="yes"> Alternativ`
+        // let radiobuttons = `<input type="radio" name="choice" value="yes"> Alternativ`
 
         console.log(data.alternatives)
+        // console.log(Object.values(data.alternatives)[0])
 
         for (let i = 0; i < radioButtonsLength; i++) {
-          let input = `<input type="radio" name="alt1" value="alt3"> Alternativ <br>`
+          let input = '<input type="radio" name="alt" value="alt' + `${[i+1]}` + '">' + `${Object.values(data.alternatives)[i]}` + '<br>'
           // form.textContent = 'Vem?'
           // console.log('Vem???')
           
@@ -205,6 +207,7 @@ customElements.define('quiz-question',
       event.preventDefault()
 
       this.question.answer = this._inputAnswer.value
+      // this.question.answer = this._formElement.value
       this.postAnswer(this.id)
 
       this._inputAnswer.value = ''
