@@ -24,6 +24,50 @@ template.innerHTML = `
       background-color: #222;
       color: #fff;
     }
+    input[type="text"] {
+      border: solid transparent 2px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      padding: 13px;
+      font-size: 1.2em;
+      font-weight: 700;
+      text-align: center;
+      border-radius: 4px;
+      width: 195px
+    }
+    input[type="text"]:focus {
+      border: solid #ff5e5a 2px;
+    }
+    input[type="text"]::placeholder {
+      text-align: center;
+    }
+    input[type="text"]:focus::placeholder {
+      color: transparent;
+    }
+    input[type="button"],
+    input[type="reset"],
+    input[type="submit"] {
+      cursor: pointer;
+      /* background-image: linear-gradient(-45deg, #ff5e5a, #ff405a); */
+      background-color: green;
+      padding: 20px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      font-weight: 700;
+      /* font-style: italic; */
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #fff;
+      -webkit-transition: all 0.2s;
+      transition: all 0.2s;
+      width: 224px
+    }
+    input[type="button"]:hover, input[type="button"]:focus,
+    input[type="reset"]:hover, input[type="reset"]:focus,
+    input[type="submit"]:hover, input[type="submit"]:hover {
+      box-shadow: 0px 20px 50px rgba(255, 74, 89, 0.3);
+    }
     .message-board {
       margin-top: 20px;
       font-size: 2.2em;
@@ -36,11 +80,11 @@ template.innerHTML = `
     } */
   </style>
   <div class="quiz-question">
-  <div class="message-board"></div>
-    <!-- <h2 id="question-h2">Quiz question</h2> -->
+    <div class="message-board"></div>
     <slot></slot>
     <p>Show the alternatives here.</p>
-    <form action="#">
+    <form action="#" id="quiz-form">
+      <!-- <input type="radio" name="choice" value="yes"> Alternativ -->
       <input type="text" id="quiz-answer" name="quiz-answer" value="" required><br>
       <input type="submit" value="Submit answer">
     </form>
@@ -121,15 +165,32 @@ customElements.define('quiz-question',
       // // add text to <h2> 
       // h2.textContent = data.question
 
+      const form = document.querySelector('quiz-question')
+      // form.textContent = 'Vad är detta?'
+
       this.setAttribute('message', data.question)
 
       if (data.alternatives) {
+        // this.document.querySelector('#quiz-answer').style.visibility = "hidden"
+
         console.log('Det finns alternativ!')
         console.log(Object.keys(data.alternatives).length)
 
-        // for (i = 1; i < Object.keys(data.alternatives).length; i++) {
+        // form.innerHTML = `<button>Syns detta?</button>`
+        const radioButtonsLength = Object.keys(data.alternatives).length
+        let radiobuttons = `<input type="radio" name="choice" value="yes"> Alternativ`
 
-        // }
+        console.log(data.alternatives)
+
+        for (let i = 0; i < radioButtonsLength; i++) {
+          let input = `<input type="radio" name="alt1" value="alt3"> Alternativ <br>`
+          // form.textContent = 'Vem?'
+          // console.log('Vem???')
+          
+          form.innerHTML += input
+        }
+      } else {
+        form.innerHTML = ''
       }
 
       console.log('DATA', data)
@@ -145,6 +206,8 @@ customElements.define('quiz-question',
 
       this.question.answer = this._inputAnswer.value
       this.postAnswer(this.id)
+
+      this._inputAnswer.value = ''
 
       // console.log(data.id)
       // this.getQuestion(data.id)
@@ -183,7 +246,7 @@ customElements.define('quiz-question',
       this.getQuestion()
 
       if (!this.hasAttribute('message')) {
-        this.setAttribute('message', 'A simple hello from a web component.')
+        this.setAttribute('message', 'Prepare for the quiz"')
       }
 
       this._upgradeProperty('message')
