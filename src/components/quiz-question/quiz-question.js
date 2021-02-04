@@ -113,6 +113,8 @@ customElements.define('quiz-question',
       // Get the input, datalist and article elements in the shadow root.
       this._inputAnswer = this.shadowRoot.querySelector('#quiz-answer')
       this._formElement = this.shadowRoot.querySelector('form')
+      this.inputRadioBtn = ''
+      this.radioAnswer = ''
 
       // Bind event handlers of child elements.
       this._onSubmit = this._onSubmit.bind(this)
@@ -170,8 +172,10 @@ customElements.define('quiz-question',
 
       this.setAttribute('message', data.question)
 
+      this._inputAnswer.style.display = "inline"
+
       if (data.alternatives) {
-        // this.document.querySelector('#quiz-answer').style.visibility = "hidden"
+        form.innerHTML = ''
         this._inputAnswer.style.display = "none"
 
         console.log('Det finns alternativ!')
@@ -185,12 +189,14 @@ customElements.define('quiz-question',
         // console.log(Object.values(data.alternatives)[0])
 
         for (let i = 0; i < radioButtonsLength; i++) {
-          let input = '<input type="radio" name="alt" value="alt' + `${[i+1]}` + '">' + `${Object.values(data.alternatives)[i]}` + '<br>'
-          // form.textContent = 'Vem?'
-          // console.log('Vem???')
-          
-          form.innerHTML += input
+          this.inputRadioBtn = '<input type="radio" name="alt" value="alt' + `${[i+1]}` + '">' + `${Object.values(data.alternatives)[i]}`
+          form.innerHTML += this.inputRadioBtn + '<br>'
         }
+
+        this.radioAnswer = document.getElementsByName('alt')
+
+        console.log(this.radioAnswer[2].value)
+
       } else {
         form.innerHTML = ''
       }
@@ -206,8 +212,15 @@ customElements.define('quiz-question',
       // Do not submit the form!
       event.preventDefault()
 
+      for (let i = 0; i < this.radioAnswer.length; i++) {
+        if (this.radioAnswer[i].checked === true) {
+          console.log('DEN STANNAR VID RÄTT ALTERNATIV: ' + this.radioAnswer[i].value)
+          this._inputAnswer.value = ''
+          this._inputAnswer.value = this.radioAnswer[i].value
+        }
+      }
+
       this.question.answer = this._inputAnswer.value
-      // this.question.answer = this._formElement.value
       this.postAnswer(this.id)
 
       this._inputAnswer.value = ''
