@@ -113,44 +113,45 @@ customElements.define('countdown-timer',
      */
     attributeChangedCallback (name, oldValue, newValue) {
       if (name === 'value') {
-        this.timeleft = newValue
+        this.timeleft = Number(newValue)
         console.log('newValue ' + newValue)
+        this.startTimer(this.timeleft, this.display)
       }
     }
 
-    /**
-    * Run the specified instance property
-    * through the class setter.
-    *
-    * @param {string} prop - The property's name.
-    */
-   _upgradeProperty (prop) {
-    if (Object.hasOwnProperty.call(this, prop)) {
-      const value = this[prop]
-      delete this[prop]
-      this[prop] = value
-    }
-  }
+  //   /**
+  //   * Run the specified instance property
+  //   * through the class setter.
+  //   *
+  //   * @param {string} prop - The property's name.
+  //   */
+  //  _upgradeProperty (prop) {
+  //   if (Object.hasOwnProperty.call(this, prop)) {
+  //     const value = this[prop]
+  //     delete this[prop]
+  //     this[prop] = value
+  //   }
+  // }
 
-  /**
-  * Gets the message.
-  *
-  * @returns {string} The message value.
-  */
-  get counter () {
-    return this.getAttribute('value')
-  }
+  // /**
+  // * Gets the message.
+  // *
+  // * @returns {string} The message value.
+  // */
+  // get counter () {
+  //   return this.getAttribute('value')
+  // }
 
-  /**
-  * Sets the message.
-  *
-  * @param {string} value - The message.
-  */
-  set counter (value) {
-    if (this.counter !== value) {
-      this.setAttribute('value', value)
-    }
-  }
+  // /**
+  // * Sets the message.
+  // *
+  // * @param {string} value - The message.
+  // */
+  // set counter (value) {
+  //   if (this.counter !== value) {
+  //     this.setAttribute('value', value)
+  //   }
+  // }
 
   
   }
