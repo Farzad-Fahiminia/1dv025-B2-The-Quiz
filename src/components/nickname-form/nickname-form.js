@@ -6,7 +6,7 @@
  */
 
 //  import { HighScore } from '../high-score.js'
-import '../high-score'
+// import '../high-score'
 
  /**
  * Define template.

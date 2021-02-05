@@ -70,6 +70,7 @@ template.innerHTML = `
     }
     .message-board {
       margin-top: 20px;
+      margin-bottom: 20px;
       font-size: 2.2em;
       font-weight: 700;
       text-transform: none !important;
@@ -81,11 +82,11 @@ template.innerHTML = `
   </style>
   <div class="quiz-question">
     <div class="message-board"></div>
-    <p>Show the alternatives here.</p>
+    <!-- <p>Show the alternatives here.</p> -->
     <form action="#" id="quiz-form">
       <!-- <input type="radio" name="choice" value="alt3"> Alternativ -->
       <slot></slot>
-      <input type="text" id="quiz-answer" name="quiz-answer" value=""><br>
+      <input type="text" id="quiz-answer" name="quiz-answer" value="" placeholder="Write answer"><br>
       <input type="submit" value="Submit answer">
     </form>
   </div>
@@ -120,8 +121,6 @@ customElements.define('quiz-question',
       this._onSubmit = this._onSubmit.bind(this)
 
       this.question = { answer: '' }
-      // this.id = ''
-      // this.nextUrl = ''
       this._answerUrl = 'http://courselab.lnu.se/answer/'
       this._questionUrl = 'http://courselab.lnu.se/question/1'
     }
@@ -167,10 +166,9 @@ customElements.define('quiz-question',
       // // add text to <h2> 
       // h2.textContent = data.question
 
-      const form = document.querySelector('quiz-question')
-      // form.textContent = 'Vad är detta?'
-
       this.setAttribute('message', data.question)
+
+      const form = document.querySelector('quiz-question')
 
       this._inputAnswer.style.display = "inline"
 
@@ -181,9 +179,7 @@ customElements.define('quiz-question',
         console.log('Det finns alternativ!')
         console.log(Object.keys(data.alternatives).length)
 
-        // form.innerHTML = `<button>Syns detta?</button>`
         const radioButtonsLength = Object.keys(data.alternatives).length
-        // let radiobuttons = `<input type="radio" name="choice" value="yes"> Alternativ`
 
         console.log(data.alternatives)
         // console.log(Object.values(data.alternatives)[0])
@@ -201,11 +197,19 @@ customElements.define('quiz-question',
         form.innerHTML = ''
       }
 
+      // Check timelimit on qurrent question
+      if (data.limit) {
+        console.log('Den hittar timelimit!!! ' + data.limit + ' sekunder')
+        
+        let counter = document.querySelector('countdown-timer')
+        counter.setAttribute('value', data.limit) 
+        console.log(counter)
+      }
+
       console.log('DATA', data)
       // console.log(data.question)
 
       this.id = data.id
-      console.log(data.id)
     }
 
     _onSubmit (event) {
