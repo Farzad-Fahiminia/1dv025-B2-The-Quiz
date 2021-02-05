@@ -116,6 +116,7 @@ customElements.define('quiz-question',
       this._formElement = this.shadowRoot.querySelector('form')
       this.inputRadioBtn = ''
       this.radioAnswer = ''
+      this.timeLimit = ''
 
       // Bind event handlers of child elements.
       this._onSubmit = this._onSubmit.bind(this)
@@ -148,7 +149,7 @@ customElements.define('quiz-question',
     }
 
     async getQuestion (_questionUrl) {
-      console.log('Syns frågan på getQuestion?')
+      // console.log('Syns frågan på getQuestion?')
 
       let data = await window.fetch(`${this._questionUrl}`, {
         method: 'GET',
@@ -158,30 +159,22 @@ customElements.define('quiz-question',
       })
       data = await data.json()
 
-      // const elem = document.querySelector('quiz-question')
-      // // create a <h2> element
-      // const h2 = document.createElement('h2')
-      // // add <h2> to the shadow DOM
-      // elem.appendChild(h2)
-      // // add text to <h2> 
-      // h2.textContent = data.question
-
       this.setAttribute('message', data.question)
 
-      const form = document.querySelector('quiz-question')
-
       this._inputAnswer.style.display = "inline"
+
+      const form = document.querySelector('quiz-question')
 
       if (data.alternatives) {
         form.innerHTML = ''
         this._inputAnswer.style.display = "none"
 
-        console.log('Det finns alternativ!')
-        console.log(Object.keys(data.alternatives).length)
+        // console.log('Det finns alternativ!')
+        // console.log(Object.keys(data.alternatives).length)
 
         const radioButtonsLength = Object.keys(data.alternatives).length
 
-        console.log(data.alternatives)
+        // console.log(data.alternatives)
         // console.log(Object.values(data.alternatives)[0])
 
         for (let i = 0; i < radioButtonsLength; i++) {
@@ -191,19 +184,23 @@ customElements.define('quiz-question',
 
         this.radioAnswer = document.getElementsByName('alt')
 
-        console.log(this.radioAnswer[2].value)
+        // console.log(this.radioAnswer[2].value)
 
       } else {
         form.innerHTML = ''
       }
 
+      let counter = document.querySelector('countdown-timer')
+      
       // Check timelimit on qurrent question
       if (data.limit) {
         console.log('Den hittar timelimit!!! ' + data.limit + ' sekunder')
+        this.timeLimit = data.limit
         
-        let counter = document.querySelector('countdown-timer')
-        counter.setAttribute('value', data.limit) 
-        console.log(counter)
+        counter.setAttribute('value', data.limit)
+        // console.log(counter)
+      } else {
+        counter.setAttribute('value', '20')
       }
 
       console.log('DATA', data)
@@ -230,7 +227,6 @@ customElements.define('quiz-question',
       this._inputAnswer.value = ''
 
       // console.log(data.id)
-      // this.getQuestion(data.id)
 
       console.log('HÄÄÄÄR: ', this.question)
     }
@@ -247,7 +243,7 @@ customElements.define('quiz-question',
       })
       data = await data.json()
 
-      console.log('POST DATA', data)
+      // console.log('POST DATA', data)
       console.log('SEND ANSWER: ', this.question.answer)
 
       this._questionUrl = data.nextURL

@@ -41,7 +41,7 @@ customElements.define('countdown-timer',
     /**
      * Creates an instance of the current type.
      */
-    constructor (timeleft = 20) {
+    constructor () {
       super()
 
       // Attach a shadow DOM tree to this element and
@@ -50,16 +50,19 @@ customElements.define('countdown-timer',
         .appendChild(template.content.cloneNode(true))
       
       // this.startTimer
-      this.timeleft = 3
+      this.timeleft = 20
       this.display = this.shadowRoot.querySelector('#time')
+      this.myInterval
     }
 
     // Source of code for timer:
     // https://stackoverflow.com/questions/40632567/how-to-stop-timer-after-reaching-zero
     startTimer (duration, display, callback) {
+      // console.log('startTimer: ' + this._questionUrl)
+
       let timer = duration, minutes, seconds
-      
-      let myInterval = setInterval(function () {
+
+      this.myInterval = setInterval(() => {
         minutes = parseInt(timer / 60, 10)
         seconds = parseInt(timer % 60, 10)
 
@@ -72,16 +75,16 @@ customElements.define('countdown-timer',
           timer = duration
         
           // clear the interal
-          clearInterval(myInterval);
+          clearInterval(this.myInterval)
 
           // use the callback
           if(callback) {
-              callback();
+              callback()
           }
         }
+      }, 1000)
 
-      }, 1000);
-    }
+     }
 
     /**
      * Attributes to monitor for changes.
@@ -101,7 +104,7 @@ customElements.define('countdown-timer',
       //   this.startTimer(this.timeleft, this.display)
       // }
 
-      this.startTimer(this.timeleft, this.display)
+      // this.startTimer(this.timeleft, this.display)
     }
 
     /**
@@ -112,12 +115,21 @@ customElements.define('countdown-timer',
      * @param {*} newValue - The new value.
      */
     attributeChangedCallback (name, oldValue, newValue) {
+      // clearInterval(this.myInterval)
       if (name === 'value') {
+        window.clearInterval(this.myInterval)
+        // console.log('attributeChangedCallback: ' + this.myInterval)
         this.timeleft = Number(newValue)
         console.log('newValue ' + newValue)
-        this.startTimer(this.timeleft, this.display)
+        // this.startTimer(this.timeleft, this.display, clearInterval(this.timeleft))
+        // this.startTimer(this.timeleft, this.display)
       }
+      this.startTimer(this.timeleft, this.display)
     }
+
+    // clean () {
+    //   this.timeleft = 0
+    // }
 
   //   /**
   //   * Run the specified instance property
