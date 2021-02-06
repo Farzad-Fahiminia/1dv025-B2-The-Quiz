@@ -18,17 +18,25 @@ template.innerHTML = `
       margin-top: 20px;
       margin-bottom: 20px;
       box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
-      padding: 5px 20px 30px 20px;
-      border-radius: 4px;
+      padding: 10px;
+      border-radius: 50%;
       max-width: 120px;
+      height: 120px;
       font-size: 1em;
       text-align: center;
       background-color: #222;
       color: #fff;
     }
+    h3 {
+      margin-top: 22px;
+      margin-bottom: 9px;
+    }
+    #time {
+      font-size: 1.6em;
+    }
   </style>
   <div class="countdown-timer">
-   <h3>Time left...</h3>
+   <h3>Timer</h3>
    <div><span id="time">00:00</span></div>
   </div>
 `
@@ -122,7 +130,6 @@ customElements.define('countdown-timer',
         this.timeleft = Number(newValue)
         console.log('newValue ' + newValue)
         // this.startTimer(this.timeleft, this.display, clearInterval(this.timeleft))
-        // this.startTimer(this.timeleft, this.display)
       }
       this.startTimer(this.timeleft, this.display)
     }
@@ -130,41 +137,6 @@ customElements.define('countdown-timer',
     // clean () {
     //   this.timeleft = 0
     // }
-
-  //   /**
-  //   * Run the specified instance property
-  //   * through the class setter.
-  //   *
-  //   * @param {string} prop - The property's name.
-  //   */
-  //  _upgradeProperty (prop) {
-  //   if (Object.hasOwnProperty.call(this, prop)) {
-  //     const value = this[prop]
-  //     delete this[prop]
-  //     this[prop] = value
-  //   }
-  // }
-
-  // /**
-  // * Gets the message.
-  // *
-  // * @returns {string} The message value.
-  // */
-  // get counter () {
-  //   return this.getAttribute('value')
-  // }
-
-  // /**
-  // * Sets the message.
-  // *
-  // * @param {string} value - The message.
-  // */
-  // set counter (value) {
-  //   if (this.counter !== value) {
-  //     this.setAttribute('value', value)
-  //   }
-  // }
-
-  
+   
   }
 )

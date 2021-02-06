@@ -36,10 +36,10 @@ template.innerHTML = `
       background-image: linear-gradient(-45deg, #ff5e5a, #ff405a);
       padding: 20px 20px;
       border: none;
-      border-radius: 4px;
+      /* border-radius: 4px; */
       font-size: 1em;
       font-weight: 700;
-      font-style: italic;
+      /* font-style: italic; */
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #fff;

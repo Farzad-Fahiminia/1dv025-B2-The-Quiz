@@ -13,12 +13,12 @@ template.innerHTML = `
   <style>
     .quiz-question {
       margin: auto;
-      margin-top: 20px;
+      margin-top: -60px;
       margin-bottom: 20px;
       box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
       padding: 20px 40px 50px 40px;
-      border-radius: 4px;
-      max-width: 650px;
+      /* border-radius: 4px; */
+      max-width: 550px;
       font-size: 1em;
       text-align: center;
       background-color: #222;
@@ -32,7 +32,7 @@ template.innerHTML = `
       font-size: 1.2em;
       font-weight: 700;
       text-align: center;
-      border-radius: 4px;
+      /* border-radius: 4px; */
       width: 195px
     }
     input[type="text"]:focus {
@@ -52,7 +52,7 @@ template.innerHTML = `
       background-color: green;
       padding: 20px 20px;
       border: none;
-      border-radius: 4px;
+      /* border-radius: 4px; */
       font-size: 1em;
       font-weight: 700;
       /* font-style: italic; */

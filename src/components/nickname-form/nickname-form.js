@@ -20,7 +20,7 @@ template.innerHTML = `
       margin-bottom: 20px;
       box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
       padding: 20px 40px 50px 40px;
-      border-radius: 4px;
+      /* border-radius: 4px; */
       max-width: 350px;
       font-size: 1em;
       text-align: center;
@@ -29,7 +29,7 @@ template.innerHTML = `
     }
     h2 {
       font-size: 2.2em;
-      font-style: italic;
+      /* font-style: italic; */
     }
     input[type="text"] {
       border: solid transparent 2px;
@@ -39,8 +39,8 @@ template.innerHTML = `
       font-size: 1.2em;
       font-weight: 700;
       text-align: center;
-      border-radius: 4px;
-      width: 195px
+      /* border-radius: 4px; */
+      width: 195px;
     }
     input[type="text"]:focus {
       border: solid #ff5e5a 2px;
@@ -58,7 +58,7 @@ template.innerHTML = `
       background-image: linear-gradient(-45deg, #ff5e5a, #ff405a);
       padding: 20px 20px;
       border: none;
-      border-radius: 4px;
+      /* border-radius: 4px; */
       font-size: 1em;
       font-weight: 700;
       font-style: italic;
