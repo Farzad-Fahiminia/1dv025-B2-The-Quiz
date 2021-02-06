@@ -5,9 +5,6 @@
  * @version 1.0.0
  */
 
-//  import { HighScore } from '../high-score.js'
-// import '../high-score'
-
  /**
  * Define template.
  */
@@ -36,7 +33,7 @@ template.innerHTML = `
       margin-top: 20px;
       margin-bottom: 10px;
       padding: 13px;
-      font-size: 1.2em;
+      font-size: 1em;
       font-weight: 700;
       text-align: center;
       /* border-radius: 4px; */
@@ -61,7 +58,7 @@ template.innerHTML = `
       /* border-radius: 4px; */
       font-size: 1em;
       font-weight: 700;
-      font-style: italic;
+      /* font-style: italic; */
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #fff;
@@ -79,8 +76,8 @@ template.innerHTML = `
    <h2>Let's play!</h2>
    <p>Compete in the quiz game by answering questions correctly in the shortest amount of time.</p>
     <form action="#">
-      <input type="text" id="nickname" name="nickname" value="" placeholder="Enter a nickname" required><br>
-      <input type="submit" value="Start game">
+      <input part="part-style" type="text" id="nickname" name="nickname" value="" placeholder="Enter a nickname" required><br>
+      <input part="part-style" type="submit" value="Start game">
     </form>
   </div>
 `

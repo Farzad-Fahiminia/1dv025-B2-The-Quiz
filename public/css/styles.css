@@ -40,3 +40,10 @@ h1, h2, h3, h4, h5, h6 {
 	fill: #222;
 	margin-bottom: -20px;
 }
+
+/* Part style in components */
+nickname-form::part(part-style),
+quiz-question::part(part-style),
+high-score::part(part-style) {
+	font-family: 'PT Mono', monospace;
+}

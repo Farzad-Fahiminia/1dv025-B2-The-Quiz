@@ -111,8 +111,6 @@ customElements.define('countdown-timer',
       //   // this.startTimer(this.timeleft, this.display, function() { alert('done')})
       //   this.startTimer(this.timeleft, this.display)
       // }
-
-      // this.startTimer(this.timeleft, this.display)
     }
 
     /**
@@ -128,7 +126,7 @@ customElements.define('countdown-timer',
         window.clearInterval(this.myInterval)
         // console.log('attributeChangedCallback: ' + this.myInterval)
         this.timeleft = Number(newValue)
-        console.log('newValue ' + newValue)
+        // console.log('newValue ' + newValue)
         // this.startTimer(this.timeleft, this.display, clearInterval(this.timeleft))
       }
       this.startTimer(this.timeleft, this.display)

@@ -27,7 +27,12 @@ template.innerHTML = `
       color: #fff;
     }
     h2 {
+      margin-top: -5px;
       font-size: 2.2em;
+      color: #ff5e5a;
+    }
+    #top5 {
+      margin-top: -20px;
     }
     input[type="button"],
     input[type="reset"],
@@ -54,12 +59,13 @@ template.innerHTML = `
     }
   </style>
   <div class="high-score">
+   <p>G A M E /// O V E R !</p>
    <h2>High Score</h2>
-   <p>Are you on the top 5 list?</p>
+   <p id="top5">Are you on the top 5 list?</p>
    <p>--------------------------</p>
    <slot></slot>
    <form action="#">
-      <input type="submit" value="Play again!">
+      <input part="part-style" type="submit" value="Play again!">
     </form>
   </div>
 `
@@ -88,9 +94,9 @@ customElements.define('high-score',
     getPlayers () {
       // localStorage.getItem('quiz_highscore')
       const player = JSON.parse(localStorage.getItem('quiz_highscore'))
-      console.log('Tom?', player)
+      // console.log('Tom?', player)
       this.highScore.push(player)
-      console.log('High Score:', this.highScore)
+      // console.log('High Score:', this.highScore)
 
       const elem = document.querySelector('high-score')
          
@@ -115,7 +121,6 @@ customElements.define('high-score',
      * Called after the element has been removed from the DOM.
      */
     disconnectedCallback () {
-      
     }
 
     // // Add players to high score list

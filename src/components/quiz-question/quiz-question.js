@@ -29,7 +29,7 @@ template.innerHTML = `
       margin-top: 20px;
       margin-bottom: 10px;
       padding: 13px;
-      font-size: 1.2em;
+      font-size: 1em;
       font-weight: 700;
       text-align: center;
       /* border-radius: 4px; */
@@ -49,7 +49,7 @@ template.innerHTML = `
     input[type="submit"] {
       cursor: pointer;
       /* background-image: linear-gradient(-45deg, #ff5e5a, #ff405a); */
-      background-color: green;
+      background-color: #a858ea;
       padding: 20px 20px;
       border: none;
       /* border-radius: 4px; */
@@ -66,7 +66,7 @@ template.innerHTML = `
     input[type="button"]:hover, input[type="button"]:focus,
     input[type="reset"]:hover, input[type="reset"]:focus,
     input[type="submit"]:hover, input[type="submit"]:hover {
-      box-shadow: 0px 20px 50px rgba(255, 74, 89, 0.3);
+      box-shadow: 0px 20px 50px rgba(168, 88, 234, 0.3);
     }
     .message-board {
       margin-top: 20px;
@@ -75,19 +75,13 @@ template.innerHTML = `
       font-weight: 700;
       text-transform: none !important;
     }
-    /* ::slotted(h2) {
-      font-size: 2.2em;
-      text-transform: none !important;
-    } */
   </style>
   <div class="quiz-question">
     <div class="message-board"></div>
-    <!-- <p>Show the alternatives here.</p> -->
     <form action="#" id="quiz-form">
-      <!-- <input type="radio" name="choice" value="alt3"> Alternativ -->
       <slot></slot>
-      <input type="text" id="quiz-answer" name="quiz-answer" value="" placeholder="Write answer"><br>
-      <input type="submit" value="Submit answer">
+      <input part="part-style" type="text" id="quiz-answer" name="quiz-answer" value="" placeholder="Write answer"><br>
+      <input part="part-style" type="submit" value="Submit answer">
     </form>
   </div>
 `
@@ -178,14 +172,10 @@ customElements.define('quiz-question',
         // console.log(Object.values(data.alternatives)[0])
 
         for (let i = 0; i < radioButtonsLength; i++) {
-          this.inputRadioBtn = '<input type="radio" name="alt" value="alt' + `${[i+1]}` + '">' + `${Object.values(data.alternatives)[i]}`
+          this.inputRadioBtn = '<input type="radio" name="alt" value="alt' + `${[i+1]}` + '">' + ` ${Object.values(data.alternatives)[i]}`
           form.innerHTML += this.inputRadioBtn + '<br>'
         }
-
         this.radioAnswer = document.getElementsByName('alt')
-
-        // console.log(this.radioAnswer[2].value)
-
       } else {
         form.innerHTML = ''
       }
@@ -194,23 +184,19 @@ customElements.define('quiz-question',
       
       // Check timelimit on qurrent question
       if (data.limit) {
-        console.log('Den hittar timelimit!!! ' + data.limit + ' sekunder')
+        // console.log('Den hittar timelimit!!! ' + data.limit + ' sekunder')
         this.timeLimit = data.limit
-        
         counter.setAttribute('value', data.limit)
-        // console.log(counter)
       } else {
         counter.setAttribute('value', '20')
       }
 
       console.log('DATA', data)
-      // console.log(data.question)
 
       this.id = data.id
     }
 
     _onSubmit (event) {
-      // Do not submit the form!
       event.preventDefault()
 
       for (let i = 0; i < this.radioAnswer.length; i++) {
@@ -223,16 +209,13 @@ customElements.define('quiz-question',
 
       this.question.answer = this._inputAnswer.value
       this.postAnswer(this.id)
-
       this._inputAnswer.value = ''
-
-      // console.log(data.id)
 
       console.log('HÄÄÄÄR: ', this.question)
     }
 
     async postAnswer (id) {
-      console.log('Syns svaret?')
+      // console.log('Syns svaret?')
 
       let data = await window.fetch(`${this._answerUrl}${id}`, {
         method: 'POST',
@@ -243,14 +226,12 @@ customElements.define('quiz-question',
       })
       data = await data.json()
 
-      // console.log('POST DATA', data)
-      console.log('SEND ANSWER: ', this.question.answer)
+      // console.log('SEND ANSWER: ', this.question.answer)
 
       this._questionUrl = data.nextURL
-      // this._questionUrl = 'http://courselab.lnu.se/question/21'
 
       this.getQuestion(this._questionUrl)
-      console.log('POST DATA ID', this._questionUrl)
+      // console.log('POST DATA ID', this._questionUrl)
     }
 
     /**
@@ -264,10 +245,9 @@ customElements.define('quiz-question',
       if (!this.hasAttribute('message')) {
         this.setAttribute('message', 'Prepare for the quiz"')
       }
-
       this._upgradeProperty('message')
     }
-    
+
     /**
      * Called when observed attribute(s) changes.
      *
@@ -327,6 +307,5 @@ customElements.define('quiz-question',
     clean () {
       this._messageBoard.textContent = ''
     }
-    
   }
 )
