@@ -93,9 +93,9 @@ customElements.define('high-score',
 
     getPlayers () {
       // localStorage.getItem('quiz_highscore')
-      const player = JSON.parse(localStorage.getItem('quiz_highscore'))
+      const playera = JSON.parse(localStorage.getItem('quiz_highscore'))
       // console.log('Tom?', player)
-      this.highScore.push(player)
+      this.highScore.push(players)
       // console.log('High Score:', this.highScore)
       const elem = document.querySelector('high-score')
       // create a <p> element
