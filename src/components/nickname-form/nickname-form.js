@@ -82,6 +82,7 @@ template.innerHTML = `
   </div>
 `
 console.log(localStorage)
+// console.log('localStorage: ' + localStorage.getItem('quiz_highscore'))
 
 /**
  * Define custom element.
@@ -108,7 +109,7 @@ customElements.define('nickname-form',
 
       this.arrayOfPlayers = []
 
-      this.person = {
+      this.player = {
         nickname: '',
         score: 0
       }
@@ -138,18 +139,37 @@ customElements.define('nickname-form',
 
       // this.arrayOfPlayers.push({nickname: this._inputNickname.value, score: 0})
       // console.log(this.arrayOfPlayers)
-      
-      const player = Object.create(this.person)
-      player.nickname = this._inputNickname.value
-      player.score = 0
 
-      window.localStorage.setItem('quiz_highscore', JSON.stringify(player))
+      this.player.nickname = this._inputNickname.value
 
-      console.log(player)
+      if (localStorage.getItem('quiz_highscore') === null) {
+        // Add to existing array []
+        localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers.concat(this.player)))
+        // localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers.push(this.player)))
+        console.log('localStorage är tom!!!')
+      } else {
+        // window.localStorage.setItem('quiz_highscore', JSON.stringify(this.player))
+        let arr = localStorage.getItem('quiz_highscore')
+        arr = JSON.parse(arr)
+        // arr.push({nickname: this._inputNickname.value, score: 0})
+        console.log('Detta är arr ' + arr)
+        console.log('Detta är player ' + this.player)
+        console.log(arr + this.player)
+        this.arrayOfPlayers = this.arrayOfPlayers.concat(arr, this.player)
+
+        console.log('Ser den bra ut? ' + JSON.stringify(this.arrayOfPlayers))
+
+        localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers))
+        // this.arrayOfPlayers.push(this.player)
+        // console.log('localStorage är INTE tom!!! ' + localStorage.getItem('quiz_highscore'))
+      }
+
+      // window.localStorage.setItem('quiz_highscore', JSON.stringify(this.player))
+
+      console.log(this.player)
       
-      this.arrayOfPlayers.push(player)
-      console.log('Array of players:', this.arrayOfPlayers)
-      
+      // this.arrayOfPlayers.push(this.player)
+      // console.log('Array of players:', this.arrayOfPlayers)
     }
 
     /**
@@ -158,6 +178,8 @@ customElements.define('nickname-form',
     connectedCallback () {
       this._inputNickname.addEventListener('input', this._onInput)
       this._formElement.addEventListener('submit', this._onSubmit)
+      console.log('localStorage: ' + localStorage.getItem('quiz_highscore'))
+      // console.log(this.player)
     }
 
     /**

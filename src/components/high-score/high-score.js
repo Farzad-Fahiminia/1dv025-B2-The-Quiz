@@ -88,7 +88,7 @@ customElements.define('high-score',
 
       // Array of players pushed in from nickname.
       this.highScore = []
-      console.log(this.highScore)
+      // console.log(this.highScore)
     }
 
     getPlayers () {
@@ -97,15 +97,11 @@ customElements.define('high-score',
       // console.log('Tom?', player)
       this.highScore.push(player)
       // console.log('High Score:', this.highScore)
-
       const elem = document.querySelector('high-score')
-         
       // create a <p> element
       const p = document.createElement('p')
-         
       // add <p> to the shadow DOM
       elem.appendChild(p)
-         
       // add text to <p> 
       p.textContent = `${player.nickname}: ${player.score} sec`
     }

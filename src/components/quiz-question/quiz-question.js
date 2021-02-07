@@ -111,6 +111,10 @@ customElements.define('quiz-question',
       this.inputRadioBtn = ''
       this.radioAnswer = ''
       this.timeLimit = ''
+      
+      this.timer = 0
+      this.startTime
+      this.endTime
 
       // Bind event handlers of child elements.
       this._onSubmit = this._onSubmit.bind(this)
@@ -211,6 +215,11 @@ customElements.define('quiz-question',
       this.postAnswer(this.id)
       this._inputAnswer.value = ''
 
+      if (Number(this.id) === 326) {
+        this.endTimer()
+        console.log('Tiden stannar vid sista frågan')
+      }
+
       console.log('HÄÄÄÄR: ', this.question)
     }
 
@@ -234,6 +243,27 @@ customElements.define('quiz-question',
       // console.log('POST DATA ID', this._questionUrl)
     }
 
+    // Timer
+    startTimer() {
+      this.startTime = new Date()
+    }
+
+    endTimer() {
+      this.endTime = new Date()
+      let timeDifference = this.endTime - this.startTime //in ms
+      // strip the ms
+      timeDifference /= 1000
+
+      // get seconds 
+      let seconds = Math.round(timeDifference)
+      console.log(seconds + " seconds")
+
+      let existing = localStorage.getItem('quiz_highscore')
+      console.log(existing)
+
+      // window.localStorage.setItem('quiz_highscore', JSON.stringify(player.score(seconds)))
+    }
+
     /**
     * Called after the element is inserted into the DOM.
     */
@@ -241,6 +271,7 @@ customElements.define('quiz-question',
       this._inputAnswer.addEventListener('input', this._onInput)
       this._formElement.addEventListener('submit', this._onSubmit)
       this.getQuestion()
+      this.startTimer()
 
       if (!this.hasAttribute('message')) {
         this.setAttribute('message', 'Prepare for the quiz"')
