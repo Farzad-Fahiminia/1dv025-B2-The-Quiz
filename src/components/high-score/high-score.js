@@ -87,23 +87,34 @@ customElements.define('high-score',
         .appendChild(template.content.cloneNode(true))
 
       // Array of players pushed in from nickname.
-      this.highScore = []
+      this.highScore
       // console.log(this.highScore)
     }
 
     getPlayers () {
-      // localStorage.getItem('quiz_highscore')
-      const playera = JSON.parse(localStorage.getItem('quiz_highscore'))
-      // console.log('Tom?', player)
-      this.highScore.push(players)
-      // console.log('High Score:', this.highScore)
-      const elem = document.querySelector('high-score')
-      // create a <p> element
-      const p = document.createElement('p')
-      // add <p> to the shadow DOM
-      elem.appendChild(p)
-      // add text to <p> 
-      p.textContent = `${player.nickname}: ${player.score} sec`
+      // High score
+      this.highScore = localStorage.getItem('quiz_highscore')
+      this.highScore = JSON.parse(this.highScore)
+      // console.log('High Score: ' + this.highScore)
+      // console.log('High Score sort: ' + this.highScore[Object(this.highScore.length)-1].score)
+      this.highScore.sort((a, b) => (a.score > b.score) ? 1 : -1)
+      console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
+
+      let topFive = []
+      for (let i = 0; i < 5; i++) {
+        topFive[i] = this.highScore[i]["nickname"] + ': ' + this.highScore[i]["score"]
+      }
+
+      console.log('topFive: ' + topFive)
+      // console.log('topFive: ' + this.highScore["score"])
+
+      // const elem = document.querySelector('high-score')
+      // // create a <p> element
+      // const p = document.createElement('p')
+      // // add <p> to the shadow DOM
+      // elem.appendChild(p)
+      // // add text to <p> 
+      // p.textContent = `${player.nickname}: ${player.score} sec`
     }
 
     /**
