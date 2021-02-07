@@ -133,13 +133,6 @@ customElements.define('nickname-form',
       // Do not submit the form!
       event.preventDefault()
 
-      // localStorage.setItem('quiz_higscore', JSON.stringify({nickname: this._inputNickname.value, score: 0}))
-
-      // console.log('localStorage:',localStorage)
-
-      // this.arrayOfPlayers.push({nickname: this._inputNickname.value, score: 0})
-      // console.log(this.arrayOfPlayers)
-
       this.player.nickname = this._inputNickname.value
 
       if (localStorage.getItem('quiz_highscore') === null) {
@@ -150,8 +143,6 @@ customElements.define('nickname-form',
         let arr = localStorage.getItem('quiz_highscore')
         arr = JSON.parse(arr)
         this.arrayOfPlayers = []
-        // console.log('Detta är arr ' + arr)
-        // console.log('Detta är player ' + this.player)
         this.arrayOfPlayers = this.arrayOfPlayers.concat(arr, this.player)
         // console.log('Ser den bra ut? ' + JSON.stringify(this.arrayOfPlayers))
         localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers))

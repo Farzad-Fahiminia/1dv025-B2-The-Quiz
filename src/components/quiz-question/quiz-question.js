@@ -258,10 +258,11 @@ customElements.define('quiz-question',
       let seconds = Math.round(timeDifference)
       console.log(seconds + " seconds")
 
-      let existing = localStorage.getItem('quiz_highscore')
-      console.log(existing)
-
-      // window.localStorage.setItem('quiz_highscore', JSON.stringify(player.score(seconds)))
+      // Set time on players score
+      let players = localStorage.getItem('quiz_highscore')
+      players = JSON.parse(players)
+      players[Object(players.length)-1].score = seconds
+      localStorage.setItem('quiz_highscore', JSON.stringify(players))
     }
 
     /**
