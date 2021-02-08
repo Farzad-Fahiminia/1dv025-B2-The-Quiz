@@ -147,8 +147,6 @@ customElements.define('quiz-question',
     }
 
     async getQuestion (_questionUrl) {
-      // console.log('Syns frågan på getQuestion?')
-
       let data = await window.fetch(`${this._questionUrl}`, {
         method: 'GET',
         headers: {
@@ -167,13 +165,7 @@ customElements.define('quiz-question',
         form.innerHTML = ''
         this._inputAnswer.style.display = "none"
 
-        // console.log('Det finns alternativ!')
-        // console.log(Object.keys(data.alternatives).length)
-
         const radioButtonsLength = Object.keys(data.alternatives).length
-
-        // console.log(data.alternatives)
-        // console.log(Object.values(data.alternatives)[0])
 
         for (let i = 0; i < radioButtonsLength; i++) {
           this.inputRadioBtn = '<input type="radio" name="alt" value="alt' + `${[i+1]}` + '">' + ` ${Object.values(data.alternatives)[i]}`
@@ -185,7 +177,6 @@ customElements.define('quiz-question',
       }
 
       let counter = document.querySelector('countdown-timer')
-      
       // Check timelimit on qurrent question
       if (data.limit) {
         // console.log('Den hittar timelimit!!! ' + data.limit + ' sekunder')
@@ -224,8 +215,6 @@ customElements.define('quiz-question',
     }
 
     async postAnswer (id) {
-      // console.log('Syns svaret?')
-
       let data = await window.fetch(`${this._answerUrl}${id}`, {
         method: 'POST',
         headers: {

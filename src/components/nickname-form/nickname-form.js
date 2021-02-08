@@ -113,7 +113,6 @@ customElements.define('nickname-form',
         nickname: '',
         score: 0
       }
-      // this.playerScore = new HighScore()
     }
 
     /**
@@ -130,7 +129,6 @@ customElements.define('nickname-form',
     }
 
     _onSubmit (event) {
-      // Do not submit the form!
       event.preventDefault()
 
       this.player.nickname = this._inputNickname.value

@@ -88,33 +88,26 @@ customElements.define('high-score',
 
       // Array of players pushed in from nickname.
       this.highScore
-      // console.log(this.highScore)
     }
 
     getPlayers () {
       // High score
       this.highScore = localStorage.getItem('quiz_highscore')
       this.highScore = JSON.parse(this.highScore)
-      // console.log('High Score: ' + this.highScore)
-      // console.log('High Score sort: ' + this.highScore[Object(this.highScore.length)-1].score)
       this.highScore.sort((a, b) => (a.score > b.score) ? 1 : -1)
-      console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
+      // console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
 
-      let topFive = []
-      for (let i = 0; i < 5; i++) {
-        topFive[i] = this.highScore[i]["nickname"] + ': ' + this.highScore[i]["score"]
+      if (localStorage.getItem('quiz_highscore') === null) {
+        
       }
 
-      console.log('topFive: ' + topFive)
-      // console.log('topFive: ' + this.highScore["score"])
-
-      // const elem = document.querySelector('high-score')
-      // // create a <p> element
-      // const p = document.createElement('p')
-      // // add <p> to the shadow DOM
-      // elem.appendChild(p)
-      // // add text to <p> 
-      // p.textContent = `${player.nickname}: ${player.score} sec`
+      for (let i = 0; i < 5; i++) {
+        let playerScore = `${this.highScore[i]["nickname"]}: ${this.highScore[i]["score"]} sec`
+        const elem = document.querySelector('high-score')
+        const p = document.createElement('p')
+        p.innerText = playerScore
+        elem.appendChild(p);
+      }
     }
 
     /**
@@ -129,12 +122,5 @@ customElements.define('high-score',
      */
     disconnectedCallback () {
     }
-
-    // // Add players to high score list
-    // set Score (player) {
-    //   // var player = JSON.parse(localStorage.getItem('quiz_higscore'))
-    //   this.highScore.push(player)
-    //   console.log('Displeyed in High Score:', this.highScore)
-    // }
   }
 )
