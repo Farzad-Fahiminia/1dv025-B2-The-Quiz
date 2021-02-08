@@ -162,14 +162,32 @@ customElements.define('quiz-question',
       const form = document.querySelector('quiz-question')
 
       if (data.alternatives) {
+        const elem = document.querySelector('quiz-question')
         form.innerHTML = ''
         this._inputAnswer.style.display = "none"
 
         const radioButtonsLength = Object.keys(data.alternatives).length
 
         for (let i = 0; i < radioButtonsLength; i++) {
-          this.inputRadioBtn = '<input type="radio" name="alt" value="alt' + `${[i+1]}` + '">' + ` ${Object.values(data.alternatives)[i]}`
-          form.innerHTML += this.inputRadioBtn + '<br>'
+          // this.inputRadioBtn = '<input type="radio" name="alt" value="alt' + `${[i+1]}` + '">' + ` ${Object.values(data.alternatives)[i]}`
+          // form.innerHTML += this.inputRadioBtn + '<br>'
+
+          const inputRadio = document.createElement('input')
+          inputRadio.setAttribute("type", "radio")
+          inputRadio.setAttribute("name", "alt")
+          inputRadio.setAttribute("value", "alt" + `${[i+1]}`)
+
+          const lableInput = document.createElement("lable")
+          const textAlt = document.createTextNode(`${Object.values(data.alternatives)[i]}`)
+          lableInput.appendChild(textAlt)
+          const newLine = document.createElement("br")
+
+          // console.log(inputRadio)
+          
+          lableInput.appendChild(textAlt)
+          elem.appendChild(inputRadio)
+          elem.appendChild(lableInput)
+          elem.appendChild(newLine)
         }
         this.radioAnswer = document.getElementsByName('alt')
       } else {

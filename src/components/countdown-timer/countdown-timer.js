@@ -66,8 +66,6 @@ customElements.define('countdown-timer',
     // Source of code for timer:
     // https://stackoverflow.com/questions/40632567/how-to-stop-timer-after-reaching-zero
     startTimer (duration, display, callback) {
-      // console.log('startTimer: ' + this._questionUrl)
-
       let timer = duration, minutes, seconds
 
       this.myInterval = setInterval(() => {
@@ -108,8 +106,7 @@ customElements.define('countdown-timer',
     */
     connectedCallback () {
       // window.onload = () => {
-      //   // this.startTimer(this.timeleft, this.display, function() { alert('done')})
-      //   this.startTimer(this.timeleft, this.display)
+      //  // this.startTimer(this.timeleft, this.display, function() { alert('done')})
       // }
     }
 
@@ -131,10 +128,5 @@ customElements.define('countdown-timer',
       }
       this.startTimer(this.timeleft, this.display)
     }
-
-    // clean () {
-    //   this.timeleft = 0
-    // }
-   
   }
 )

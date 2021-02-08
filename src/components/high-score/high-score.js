@@ -91,18 +91,12 @@ customElements.define('high-score',
     }
 
     getPlayers () {
-      // // High score
-      // this.highScore = localStorage.getItem('quiz_highscore')
-      // this.highScore = JSON.parse(this.highScore)
-      // this.highScore.sort((a, b) => (a.score > b.score) ? 1 : -1)
-      // // console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
-
       const elem = document.querySelector('high-score')
       
       if (localStorage.getItem('quiz_highscore') === null) {
         const p = document.createElement('p')
         p.innerText = 'no scores'
-        elem.appendChild(p);
+        elem.appendChild(p)
       } else {
         // High score
         this.highScore = localStorage.getItem('quiz_highscore')
@@ -114,7 +108,7 @@ customElements.define('high-score',
           let playerScore = `${this.highScore[i]["nickname"]}: ${this.highScore[i]["score"]} sec`
           const p = document.createElement('p')
           p.innerText = playerScore
-          elem.appendChild(p);
+          elem.appendChild(p)
         }
       }
     }
