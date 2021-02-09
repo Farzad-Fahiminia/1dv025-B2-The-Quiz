@@ -37,14 +37,13 @@ template.innerHTML = `
     input[type="button"],
     input[type="reset"],
     input[type="submit"] {
+      margin-top: 10px;
       cursor: pointer;
       background-image: linear-gradient(-45deg, #ff5e5a, #ff405a);
       padding: 20px 20px;
       border: none;
-      /* border-radius: 4px; */
       font-size: 1em;
       font-weight: 700;
-      /* font-style: italic; */
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #fff;
@@ -64,7 +63,7 @@ template.innerHTML = `
    <p id="top5">Are you on the top 5 list?</p>
    <p>--------------------------</p>
    <slot></slot>
-   <form action="#">
+   <form>
       <input part="part-style" type="submit" value="Play again!">
     </form>
   </div>
@@ -86,8 +85,27 @@ customElements.define('high-score',
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
 
+      // Get the input, datalist and article elements in the shadow root.
+      this._formElement = this.shadowRoot.querySelector('form')
+
+      // Bind event handlers of child elements.
+      this._onSubmit = this._onSubmit.bind(this)
+
       // Array of players pushed in from nickname.
       this.highScore
+    }
+
+    _onSubmit (event) {
+      event.preventDefault()
+
+      // Clear node before calling next component
+      const form = document.createElement('nickname-form')
+      const container = document.querySelector('#messageContainer')
+
+      while (container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
+      container.appendChild(form)
     }
 
     getPlayers () {
@@ -104,11 +122,20 @@ customElements.define('high-score',
         this.highScore.sort((a, b) => (a.score > b.score) ? 1 : -1)
         // console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
 
-        for (let i = 0; i < 5; i++) {
-          let playerScore = `${this.highScore[i]["nickname"]}: ${this.highScore[i]["score"]} sec`
-          const p = document.createElement('p')
-          p.innerText = playerScore
-          elem.appendChild(p)
+        if (this.highScore.length < 5) {
+          for (let i = 0; i < this.highScore.length; i++) {
+            let playerScore = `${this.highScore[i]["nickname"]}: ${this.highScore[i]["score"]} sec`
+            const p = document.createElement('p')
+            p.innerText = playerScore
+            elem.appendChild(p)
+          }
+        } else {
+          for (let i = 0; i < 5; i++) {
+            let playerScore = `${this.highScore[i]["nickname"]}: ${this.highScore[i]["score"]} sec`
+            const p = document.createElement('p')
+            p.innerText = playerScore
+            elem.appendChild(p)
+          }
         }
       }
     }
@@ -117,6 +144,7 @@ customElements.define('high-score',
     * Called after the element is inserted into the DOM.
     */
     connectedCallback () {
+      this._formElement.addEventListener('submit', this._onSubmit)
       this.getPlayers()
     }
 

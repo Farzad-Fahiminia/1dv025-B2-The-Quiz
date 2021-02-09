@@ -11,11 +11,14 @@ import '../quiz-question'
 import '../countdown-timer'
 import '../high-score'
 
-// console.log('Lägg all spel här!')
-
-export default class Game extends window.HTMLElement {
+export class Game {
   constructor () {
-    super()
-
   }
+  
+  startGame () {
+    const div = document.querySelector('#messageContainer')
+    const form = document.createElement('nickname-form')
+    div.appendChild(form)
+  }
+
 }

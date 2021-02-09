@@ -5,15 +5,14 @@
  * @version 1.0.0
  */
 
-import './components/quiz-application'
-// import './components/my-hello'
-// import './components/quiz-question'
-// import './components/nickname-form'
-// import './components/high-score'
-// import '../high-score'
+// import './components/quiz-application'
+import { Game } from './components/quiz-application/quiz-application.js'
 
 const messageContainer = document.querySelector('#messageContainer')
 const message = document.createTextNode('"The best quiz game you ever played."')
 messageContainer.appendChild(message)
+
+const game = new Game()
+game.startGame()
 
 // TODO: This is just some temple code that you are free to use, modify or completly delete. Add your code here instead.

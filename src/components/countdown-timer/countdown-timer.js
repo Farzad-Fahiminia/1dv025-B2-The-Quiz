@@ -44,8 +44,7 @@ template.innerHTML = `
 /**
  * Define custom element.
  */
-customElements.define('countdown-timer',
-  class extends HTMLElement {
+export class CountdownTimer extends HTMLElement {
     /**
      * Creates an instance of the current type.
      */
@@ -56,30 +55,42 @@ customElements.define('countdown-timer',
       // append the template to the shadow root.
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
-      
-      // this.startTimer
+
       this.timeleft = 20
       this.display = this.shadowRoot.querySelector('#time')
       this.myInterval
+      this.timer
     }
 
     // Source of code for timer:
     // https://stackoverflow.com/questions/40632567/how-to-stop-timer-after-reaching-zero
-    startTimer (duration, display, callback) {
-      let timer = duration, minutes, seconds
+    startCountdown (duration, display, callback) {
+      
+      let minutes, seconds
+
+      this.timer = duration, minutes, seconds
 
       this.myInterval = setInterval(() => {
-        minutes = parseInt(timer / 60, 10)
-        seconds = parseInt(timer % 60, 10)
+        minutes = parseInt(this.timer / 60, 10)
+        seconds = parseInt(this.timer % 60, 10)
 
         minutes = minutes < 10 ? "0" + minutes : minutes
         seconds = seconds < 10 ? "0" + seconds : seconds
 
         display.textContent = minutes + ":" + seconds
-
-        if (--timer < 0) {
-          timer = duration
         
+        if (--this.timer < 0) {
+          this.timer = duration
+
+          // Clear node before calling next component
+          const highscore = document.createElement('high-score')
+          const container = document.querySelector('#messageContainer')
+  
+          while (container.firstChild) {
+            container.removeChild(container.firstChild);
+          }
+          container.appendChild(highscore)
+          
           // clear the interal
           clearInterval(this.myInterval)
 
@@ -89,8 +100,7 @@ customElements.define('countdown-timer',
           }
         }
       }, 1000)
-
-     }
+    }
 
     /**
      * Attributes to monitor for changes.
@@ -105,11 +115,8 @@ customElements.define('countdown-timer',
     * Called after the element is inserted into the DOM.
     */
     connectedCallback () {
-      // window.onload = () => {
-      //  // this.startTimer(this.timeleft, this.display, function() { alert('done')})
-      // }
     }
-
+    
     /**
      * Called when observed attribute(s) changes.
      *
@@ -118,15 +125,11 @@ customElements.define('countdown-timer',
      * @param {*} newValue - The new value.
      */
     attributeChangedCallback (name, oldValue, newValue) {
-      // clearInterval(this.myInterval)
       if (name === 'value') {
         window.clearInterval(this.myInterval)
-        // console.log('attributeChangedCallback: ' + this.myInterval)
         this.timeleft = Number(newValue)
-        // console.log('newValue ' + newValue)
-        // this.startTimer(this.timeleft, this.display, clearInterval(this.timeleft))
       }
-      this.startTimer(this.timeleft, this.display)
+      this.startCountdown(this.timeleft, this.display)
     }
   }
-)
+  customElements.define('countdown-timer', CountdownTimer)

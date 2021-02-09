@@ -5,6 +5,9 @@
  * @version 1.0.0
  */
 
+ import '../quiz-question/quiz-question.js'
+ import '../countdown-timer/countdown-timer.js'
+
  /**
  * Define template.
  */
@@ -17,7 +20,6 @@ template.innerHTML = `
       margin-bottom: 20px;
       box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
       padding: 20px 40px 50px 40px;
-      /* border-radius: 4px; */
       max-width: 350px;
       font-size: 1em;
       text-align: center;
@@ -26,7 +28,6 @@ template.innerHTML = `
     }
     h2 {
       font-size: 2.2em;
-      /* font-style: italic; */
     }
     input[type="text"] {
       border: solid transparent 2px;
@@ -36,7 +37,6 @@ template.innerHTML = `
       font-size: 1em;
       font-weight: 700;
       text-align: center;
-      /* border-radius: 4px; */
       width: 195px;
     }
     input[type="text"]:focus {
@@ -55,10 +55,8 @@ template.innerHTML = `
       background-image: linear-gradient(-45deg, #ff5e5a, #ff405a);
       padding: 20px 20px;
       border: none;
-      /* border-radius: 4px; */
       font-size: 1em;
       font-weight: 700;
-      /* font-style: italic; */
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #fff;
@@ -81,14 +79,11 @@ template.innerHTML = `
     </form>
   </div>
 `
-console.log(localStorage)
-// console.log('localStorage: ' + localStorage.getItem('quiz_highscore'))
 
 /**
  * Define custom element.
  */
-customElements.define('nickname-form',
-  class extends HTMLElement {
+ export class NicknameForm extends HTMLElement {
     /**
      * Creates an instance of the current type.
      */
@@ -136,22 +131,25 @@ customElements.define('nickname-form',
       if (localStorage.getItem('quiz_highscore') === null) {
         // Add to existing array []
         localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers.concat(this.player)))
-        console.log('localStorage är tom!!!')
+        // console.log('localStorage är tom!!!')
       } else {
         let arr = localStorage.getItem('quiz_highscore')
         arr = JSON.parse(arr)
         this.arrayOfPlayers = []
         this.arrayOfPlayers = this.arrayOfPlayers.concat(arr, this.player)
-        // console.log('Ser den bra ut? ' + JSON.stringify(this.arrayOfPlayers))
         localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers))
+
+        // Clear node before calling next component
+        const countdown = document.createElement('countdown-timer')
+        const questionForm = document.createElement('quiz-question')
+        const container = document.querySelector('#messageContainer')
+
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
+        }
+        container.appendChild(countdown)
+        container.appendChild(questionForm)
       }
-
-      // window.localStorage.setItem('quiz_highscore', JSON.stringify(this.player))
-
-      console.log(this.player)
-      
-      // this.arrayOfPlayers.push(this.player)
-      // console.log('Array of players:', this.arrayOfPlayers)
     }
 
     /**
@@ -160,7 +158,6 @@ customElements.define('nickname-form',
     connectedCallback () {
       this._inputNickname.addEventListener('input', this._onInput)
       this._formElement.addEventListener('submit', this._onSubmit)
-      console.log('localStorage: ' + localStorage.getItem('quiz_highscore'))
     }
 
     /**
@@ -171,4 +168,4 @@ customElements.define('nickname-form',
       this._formElement.removeEventListener('submit', this._onSubmit)
     }
   }
-)
+  customElements.define('nickname-form', NicknameForm)

@@ -5,6 +5,8 @@
  * @version 1.0.0
  */
 
+import { CountdownTimer } from '../countdown-timer/countdown-timer.js'
+
 /**
  * Define template.
  */
@@ -17,7 +19,6 @@ template.innerHTML = `
       margin-bottom: 20px;
       box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
       padding: 20px 40px 50px 40px;
-      /* border-radius: 4px; */
       max-width: 550px;
       font-size: 1em;
       text-align: center;
@@ -32,7 +33,6 @@ template.innerHTML = `
       font-size: 1em;
       font-weight: 700;
       text-align: center;
-      /* border-radius: 4px; */
       width: 195px
     }
     input[type="text"]:focus {
@@ -48,14 +48,11 @@ template.innerHTML = `
     input[type="reset"],
     input[type="submit"] {
       cursor: pointer;
-      /* background-image: linear-gradient(-45deg, #ff5e5a, #ff405a); */
-      background-color: #a858ea;
+      background-image: linear-gradient(-45deg, #5885ea, #1b3e8c);
       padding: 20px 20px;
       border: none;
-      /* border-radius: 4px; */
       font-size: 1em;
       font-weight: 700;
-      /* font-style: italic; */
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #fff;
@@ -66,7 +63,7 @@ template.innerHTML = `
     input[type="button"]:hover, input[type="button"]:focus,
     input[type="reset"]:hover, input[type="reset"]:focus,
     input[type="submit"]:hover, input[type="submit"]:hover {
-      box-shadow: 0px 20px 50px rgba(168, 88, 234, 0.3);
+      box-shadow: 0px 20px 50px rgba(80, 123, 221, 0.3);
     }
     .message-board {
       margin-top: 20px;
@@ -115,6 +112,8 @@ customElements.define('quiz-question',
       this.timer = 0
       this.startTime
       this.endTime
+
+      // this.score = 0
 
       // Bind event handlers of child elements.
       this._onSubmit = this._onSubmit.bind(this)
@@ -169,9 +168,6 @@ customElements.define('quiz-question',
         const radioButtonsLength = Object.keys(data.alternatives).length
 
         for (let i = 0; i < radioButtonsLength; i++) {
-          // this.inputRadioBtn = '<input type="radio" name="alt" value="alt' + `${[i+1]}` + '">' + ` ${Object.values(data.alternatives)[i]}`
-          // form.innerHTML += this.inputRadioBtn + '<br>'
-
           const inputRadio = document.createElement('input')
           inputRadio.setAttribute("type", "radio")
           inputRadio.setAttribute("name", "alt")
@@ -181,8 +177,6 @@ customElements.define('quiz-question',
           const textAlt = document.createTextNode(`${Object.values(data.alternatives)[i]}`)
           lableInput.appendChild(textAlt)
           const newLine = document.createElement("br")
-
-          // console.log(inputRadio)
           
           lableInput.appendChild(textAlt)
           elem.appendChild(inputRadio)
@@ -197,14 +191,11 @@ customElements.define('quiz-question',
       let counter = document.querySelector('countdown-timer')
       // Check timelimit on qurrent question
       if (data.limit) {
-        // console.log('Den hittar timelimit!!! ' + data.limit + ' sekunder')
         this.timeLimit = data.limit
         counter.setAttribute('value', data.limit)
       } else {
         counter.setAttribute('value', '20')
       }
-
-      console.log('DATA', data)
 
       this.id = data.id
     }
@@ -212,9 +203,15 @@ customElements.define('quiz-question',
     _onSubmit (event) {
       event.preventDefault()
 
+      // console.log("timeLeft")
+      // const timerDiv = document.querySelector('#messageContainer').firstChild
+      // const timeLeft = timerDiv.shadowRoot.querySelector("#time")
+
+      // this.score += this.timeLimit - timeLeft.textContent
+      
+
       for (let i = 0; i < this.radioAnswer.length; i++) {
         if (this.radioAnswer[i].checked === true) {
-          console.log('DEN STANNAR VID RÄTT ALTERNATIV: ' + this.radioAnswer[i].value)
           this._inputAnswer.value = ''
           this._inputAnswer.value = this.radioAnswer[i].value
         }
@@ -226,10 +223,16 @@ customElements.define('quiz-question',
 
       if (Number(this.id) === 326) {
         this.endTimer()
-        console.log('Tiden stannar vid sista frågan')
-      }
 
-      console.log('HÄÄÄÄR: ', this.question)
+        // Clear node before calling next component
+        const highscore = document.createElement('high-score')
+        const container = document.querySelector('#messageContainer')
+
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
+        }
+        container.appendChild(highscore)
+      }
     }
 
     async postAnswer (id) {
@@ -242,16 +245,12 @@ customElements.define('quiz-question',
       })
       data = await data.json()
 
-      // console.log('SEND ANSWER: ', this.question.answer)
-
       this._questionUrl = data.nextURL
-
       this.getQuestion(this._questionUrl)
-      // console.log('POST DATA ID', this._questionUrl)
     }
 
     // Timer
-    startTimer() {
+    startTimer(time) {
       this.startTime = new Date()
     }
 
@@ -264,6 +263,8 @@ customElements.define('quiz-question',
       // get seconds 
       let seconds = Math.round(timeDifference)
       console.log(seconds + " seconds")
+
+      //this.score = total tid på spelare 20
 
       // Set time on players score
       let players = localStorage.getItem('quiz_highscore')
