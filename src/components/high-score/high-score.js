@@ -120,7 +120,19 @@ customElements.define('high-score',
         this.highScore = localStorage.getItem('quiz_highscore')
         this.highScore = JSON.parse(this.highScore)
         this.highScore.sort((a, b) => (a.score > b.score) ? 1 : -1)
-        // console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
+        console.log(this.highScore[0].score)
+        console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
+
+        //Remove players with 0 score
+        for( let i = 0; i < this.highScore.length; i++){ 
+                                   
+          if (this.highScore[i].score === 0) { 
+              this.highScore.splice(i, 1)
+              i--;
+          }
+        }
+
+        console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
 
         if (this.highScore.length < 5) {
           for (let i = 0; i < this.highScore.length; i++) {

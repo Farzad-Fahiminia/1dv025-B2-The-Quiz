@@ -8,9 +8,9 @@
 // import './components/quiz-application'
 import { Game } from './components/quiz-application/quiz-application.js'
 
-const messageContainer = document.querySelector('#messageContainer')
-const message = document.createTextNode('"The best quiz game you ever played."')
-messageContainer.appendChild(message)
+// const messageContainer = document.querySelector('#messageContainer')
+// const message = document.createTextNode('"The best quiz game you ever played."')
+// messageContainer.appendChild(message)
 
 const game = new Game()
 game.startGame()
