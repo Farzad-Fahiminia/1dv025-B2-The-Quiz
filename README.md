@@ -1,5 +1,11 @@
 # The quiz
 
+## How to start application
+1. Write 'npm install' in console window.
+2. Write 'npm start' in console window.
+3. Open any browser and enter URL 'http://localhost:8081/'.
+4. Play the quiz game.
+
 ## Introduction
 
 In this assignment, you will use asynchronous communication to create a quiz application. All questions are served to your application using HTTP in a [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) way, and your application should send the users answers back to the server for validation.
