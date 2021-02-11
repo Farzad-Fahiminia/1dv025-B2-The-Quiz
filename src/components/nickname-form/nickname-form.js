@@ -5,9 +5,6 @@
  * @version 1.0.0
  */
 
- import '../quiz-question/quiz-question.js'
- import '../countdown-timer/countdown-timer.js'
-
  /**
  * Define template.
  */
@@ -123,15 +120,18 @@ template.innerHTML = `
       }
     }
 
+     /**
+     * Handles click events for submit button.
+     *
+     * @param {*} event - Listens to event.
+     */
     _onSubmit (event) {
       event.preventDefault()
 
       this.player.nickname = this._inputNickname.value
 
       if (localStorage.getItem('quiz_highscore') === null) {
-        // Add to existing array []
         localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers.concat(this.player)))
-        // console.log('localStorage är tom!!!')
       } else {
         let arr = localStorage.getItem('quiz_highscore')
         arr = JSON.parse(arr)

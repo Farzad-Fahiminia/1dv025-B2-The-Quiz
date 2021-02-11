@@ -5,8 +5,6 @@
  * @version 1.0.0
  */
 
-import { CountdownTimer } from '../countdown-timer/countdown-timer.js'
-
 /**
  * Define template.
  */
@@ -113,8 +111,6 @@ customElements.define('quiz-question',
       this.startTime
       this.endTime
 
-      // this.score = 0
-
       // Bind event handlers of child elements.
       this._onSubmit = this._onSubmit.bind(this)
 
@@ -145,6 +141,11 @@ customElements.define('quiz-question',
       }
     }
 
+    /**
+     * Retrieves questions for the quiz.
+     *
+     * @param {String} _questionUrl - URL for questions.
+     */
     async getQuestion (_questionUrl) {
       let data = await window.fetch(`${this._questionUrl}`, {
         method: 'GET',
@@ -200,15 +201,13 @@ customElements.define('quiz-question',
       this.id = data.id
     }
 
+    /**
+     * Handles click events for submit button.
+     *
+     * @param {*} event - Listens to event.
+     */
     _onSubmit (event) {
-      event.preventDefault()
-
-      // console.log("timeLeft")
-      // const timerDiv = document.querySelector('#messageContainer').firstChild
-      // const timeLeft = timerDiv.shadowRoot.querySelector("#time")
-
-      // this.score += this.timeLimit - timeLeft.textContent
-      
+      event.preventDefault()      
 
       for (let i = 0; i < this.radioAnswer.length; i++) {
         if (this.radioAnswer[i].checked === true) {
@@ -235,6 +234,11 @@ customElements.define('quiz-question',
       }
     }
 
+    /**
+     * Posting answers for the quiz.
+     *
+     * @param {Number} id - ID number for the URL answers.
+     */
     async postAnswer (id) {
       let data = await window.fetch(`${this._answerUrl}${id}`, {
         method: 'POST',
@@ -262,9 +266,6 @@ customElements.define('quiz-question',
 
       // get seconds 
       let seconds = Math.round(timeDifference)
-      console.log(seconds + " seconds")
-
-      //this.score = total tid på spelare 20
 
       // Set time on players score
       let players = localStorage.getItem('quiz_highscore')

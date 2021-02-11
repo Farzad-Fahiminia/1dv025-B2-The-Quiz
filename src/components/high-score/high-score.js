@@ -5,8 +5,6 @@
  * @version 1.0.0
  */
 
-import '../nickname-form'
-
  /**
  * Define template.
  */
@@ -91,10 +89,14 @@ customElements.define('high-score',
       // Bind event handlers of child elements.
       this._onSubmit = this._onSubmit.bind(this)
 
-      // Array of players pushed in from nickname.
       this.highScore
     }
 
+     /**
+     * Handles click events for submit button.
+     *
+     * @param {*} event - Listens to event.
+     */
     _onSubmit (event) {
       event.preventDefault()
 
@@ -108,6 +110,10 @@ customElements.define('high-score',
       container.appendChild(form)
     }
 
+    /**
+     * Retrieves players in High Score.
+     *
+     */
     getPlayers () {
       const elem = document.querySelector('high-score')
       
@@ -120,19 +126,14 @@ customElements.define('high-score',
         this.highScore = localStorage.getItem('quiz_highscore')
         this.highScore = JSON.parse(this.highScore)
         this.highScore.sort((a, b) => (a.score > b.score) ? 1 : -1)
-        console.log(this.highScore[0].score)
-        console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
 
         //Remove players with 0 score
-        for( let i = 0; i < this.highScore.length; i++){ 
-                                   
+        for (let i = 0; i < this.highScore.length; i++) {
           if (this.highScore[i].score === 0) { 
-              this.highScore.splice(i, 1)
-              i--;
+            this.highScore.splice(i, 1)
+            i--
           }
         }
-
-        console.log('Sorterad efter score: ' + JSON.stringify(this.highScore))
 
         if (this.highScore.length < 5) {
           for (let i = 0; i < this.highScore.length; i++) {

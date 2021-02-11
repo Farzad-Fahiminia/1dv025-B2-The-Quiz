@@ -1,15 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Mono&display=swap');
 
-/* General */
+/* --- General --- */
 body {
-	/* background-image: url('/img/bg.jpg');
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-position: center;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover; */
 	font-family: 'PT Mono', monospace;
 	font-size: 1em;
 	text-align: center;
@@ -28,17 +20,13 @@ body {
 	100% {background-position: 0% 50%;}
 }
 
-h1, h2, h3, h4, h5, h6 {
-	text-transform: uppercase;
-}
-
-/* Header */
+/* --- Header --- */
 .logo {
 	fill: #222;
 	margin-bottom: -20px;
 }
 
-/* Part style in components */
+/* --- Content --- */
 nickname-form::part(part-style),
 quiz-question::part(part-style),
 high-score::part(part-style) {

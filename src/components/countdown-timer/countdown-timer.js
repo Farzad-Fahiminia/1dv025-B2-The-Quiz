@@ -5,8 +5,6 @@
  * @version 1.0.0
  */
 
-import '../quiz-question'
-
  /**
  * Define template.
  */
@@ -64,7 +62,7 @@ export class CountdownTimer extends HTMLElement {
 
     // Source of code for timer:
     // https://stackoverflow.com/questions/40632567/how-to-stop-timer-after-reaching-zero
-    startCountdown (duration, display, callback) {
+    startCountdown (duration, display) {
       
       let minutes, seconds
 
@@ -91,13 +89,8 @@ export class CountdownTimer extends HTMLElement {
           }
           container.appendChild(highscore)
           
-          // clear the interal
+          // Clear the interal
           clearInterval(this.myInterval)
-
-          // use the callback
-          if(callback) {
-              callback()
-          }
         }
       }, 1000)
     }
