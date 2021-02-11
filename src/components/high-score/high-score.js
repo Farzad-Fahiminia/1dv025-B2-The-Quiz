@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
- /**
+/**
  * Define template.
  */
 const template = document.createElement('template')
@@ -71,6 +71,9 @@ template.innerHTML = `
  * Define custom element.
  */
 customElements.define('high-score',
+  /**
+   *
+   */
   class HighScore extends HTMLElement {
     /**
      * Creates an instance of the current type.
@@ -89,10 +92,10 @@ customElements.define('high-score',
       // Bind event handlers of child elements.
       this._onSubmit = this._onSubmit.bind(this)
 
-      this.highScore
+      this.highScore = {}
     }
 
-     /**
+    /**
      * Handles click events for submit button.
      *
      * @param {*} event - Listens to event.
@@ -105,7 +108,7 @@ customElements.define('high-score',
       const container = document.querySelector('#messageContainer')
 
       while (container.firstChild) {
-        container.removeChild(container.firstChild);
+        container.removeChild(container.firstChild)
       }
       container.appendChild(form)
     }
@@ -116,7 +119,7 @@ customElements.define('high-score',
      */
     getPlayers () {
       const elem = document.querySelector('high-score')
-      
+
       if (localStorage.getItem('quiz_highscore') === null) {
         const p = document.createElement('p')
         p.innerText = 'no scores'
@@ -127,9 +130,9 @@ customElements.define('high-score',
         this.highScore = JSON.parse(this.highScore)
         this.highScore.sort((a, b) => (a.score > b.score) ? 1 : -1)
 
-        //Remove players with 0 score
+        // Remove players with 0 score
         for (let i = 0; i < this.highScore.length; i++) {
-          if (this.highScore[i].score === 0) { 
+          if (this.highScore[i].score === 0) {
             this.highScore.splice(i, 1)
             i--
           }
@@ -137,14 +140,14 @@ customElements.define('high-score',
 
         if (this.highScore.length < 5) {
           for (let i = 0; i < this.highScore.length; i++) {
-            let playerScore = `${this.highScore[i]["nickname"]}: ${this.highScore[i]["score"]} sec`
+            const playerScore = `${this.highScore[i].nickname}: ${this.highScore[i].score} sec`
             const p = document.createElement('p')
             p.innerText = playerScore
             elem.appendChild(p)
           }
         } else {
           for (let i = 0; i < 5; i++) {
-            let playerScore = `${this.highScore[i]["nickname"]}: ${this.highScore[i]["score"]} sec`
+            const playerScore = `${this.highScore[i].nickname}: ${this.highScore[i].score} sec`
             const p = document.createElement('p')
             p.innerText = playerScore
             elem.appendChild(p)
@@ -154,8 +157,8 @@ customElements.define('high-score',
     }
 
     /**
-    * Called after the element is inserted into the DOM.
-    */
+     * Called after the element is inserted into the DOM.
+     */
     connectedCallback () {
       this._formElement.addEventListener('submit', this._onSubmit)
       this.getPlayers()

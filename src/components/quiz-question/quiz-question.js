@@ -85,6 +85,9 @@ template.innerHTML = `
  * Define custom element.
  */
 customElements.define('quiz-question',
+  /**
+   *
+   */
   class extends HTMLElement {
     /**
      * Creates an instance of the current type.
@@ -106,10 +109,10 @@ customElements.define('quiz-question',
       this.inputRadioBtn = ''
       this.radioAnswer = ''
       this.timeLimit = ''
-      
+
       this.timer = 0
-      this.startTime
-      this.endTime
+      this.startTime = {}
+      this.endTime = {}
 
       // Bind event handlers of child elements.
       this._onSubmit = this._onSubmit.bind(this)
@@ -144,41 +147,41 @@ customElements.define('quiz-question',
     /**
      * Retrieves questions for the quiz.
      *
-     * @param {String} _questionUrl - URL for questions.
+     * @param {string} _questionUrl - URL for questions.
      */
     async getQuestion (_questionUrl) {
       let data = await window.fetch(`${this._questionUrl}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
-        },
+        }
       })
       data = await data.json()
 
       this.setAttribute('message', data.question)
 
-      this._inputAnswer.style.display = "inline"
+      this._inputAnswer.style.display = 'inline'
 
       const form = document.querySelector('quiz-question')
 
       if (data.alternatives) {
         const elem = document.querySelector('quiz-question')
         form.innerHTML = ''
-        this._inputAnswer.style.display = "none"
+        this._inputAnswer.style.display = 'none'
 
         const radioButtonsLength = Object.keys(data.alternatives).length
 
         for (let i = 0; i < radioButtonsLength; i++) {
           const inputRadio = document.createElement('input')
-          inputRadio.setAttribute("type", "radio")
-          inputRadio.setAttribute("name", "alt")
-          inputRadio.setAttribute("value", "alt" + `${[i+1]}`)
+          inputRadio.setAttribute('type', 'radio')
+          inputRadio.setAttribute('name', 'alt')
+          inputRadio.setAttribute('value', 'alt' + `${[i + 1]}`)
 
-          const lableInput = document.createElement("lable")
+          const lableInput = document.createElement('lable')
           const textAlt = document.createTextNode(`${Object.values(data.alternatives)[i]}`)
           lableInput.appendChild(textAlt)
-          const newLine = document.createElement("br")
-          
+          const newLine = document.createElement('br')
+
           lableInput.appendChild(textAlt)
           elem.appendChild(inputRadio)
           elem.appendChild(lableInput)
@@ -189,7 +192,7 @@ customElements.define('quiz-question',
         form.innerHTML = ''
       }
 
-      let counter = document.querySelector('countdown-timer')
+      const counter = document.querySelector('countdown-timer')
       // Check timelimit on qurrent question
       if (data.limit) {
         this.timeLimit = data.limit
@@ -207,10 +210,10 @@ customElements.define('quiz-question',
      * @param {*} event - Listens to event.
      */
     _onSubmit (event) {
-      event.preventDefault()      
+      event.preventDefault()
 
       for (let i = 0; i < this.radioAnswer.length; i++) {
-        if (this.radioAnswer[i].checked === true) {
+        if (this.radioAnswer[i].checked === true) {
           this._inputAnswer.value = ''
           this._inputAnswer.value = this.radioAnswer[i].value
         }
@@ -228,7 +231,7 @@ customElements.define('quiz-question',
         const container = document.querySelector('#messageContainer')
 
         while (container.firstChild) {
-          container.removeChild(container.firstChild);
+          container.removeChild(container.firstChild)
         }
         container.appendChild(highscore)
       }
@@ -237,13 +240,13 @@ customElements.define('quiz-question',
     /**
      * Posting answers for the quiz.
      *
-     * @param {Number} id - ID number for the URL answers.
+     * @param {number} id - ID number for the URL answers.
      */
     async postAnswer (id) {
       let data = await window.fetch(`${this._answerUrl}${id}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(this.question)
       })
@@ -253,30 +256,38 @@ customElements.define('quiz-question',
       this.getQuestion(this._questionUrl)
     }
 
-    // Timer
-    startTimer(time) {
+    /**
+     * Start timer clock.
+     *
+     * @param {number} time - Start time stamp.
+     */
+    startTimer (time) {
       this.startTime = new Date()
     }
 
-    endTimer() {
+    /**
+     * End timer clock.
+     *
+     */
+    endTimer () {
       this.endTime = new Date()
-      let timeDifference = this.endTime - this.startTime //in ms
+      let timeDifference = this.endTime - this.startTime // in ms
       // strip the ms
       timeDifference /= 1000
 
-      // get seconds 
-      let seconds = Math.round(timeDifference)
+      // get seconds
+      const seconds = Math.round(timeDifference)
 
       // Set time on players score
       let players = localStorage.getItem('quiz_highscore')
       players = JSON.parse(players)
-      players[Object(players.length)-1].score = seconds
+      players[Object(players.length) - 1].score = seconds
       localStorage.setItem('quiz_highscore', JSON.stringify(players))
     }
 
     /**
-    * Called after the element is inserted into the DOM.
-    */
+     * Called after the element is inserted into the DOM.
+     */
     connectedCallback () {
       this._inputAnswer.addEventListener('input', this._onInput)
       this._formElement.addEventListener('submit', this._onSubmit)
@@ -309,11 +320,11 @@ customElements.define('quiz-question',
     }
 
     /**
-    * Run the specified instance property
-    * through the class setter.
-    *
-    * @param {string} prop - The property's name.
-    */
+     * Run the specified instance property
+     * through the class setter.
+     *
+     * @param {string} prop - The property's name.
+     */
     _upgradeProperty (prop) {
       if (Object.hasOwnProperty.call(this, prop)) {
         const value = this[prop]
@@ -323,19 +334,19 @@ customElements.define('quiz-question',
     }
 
     /**
-    * Gets the message.
-    *
-    * @returns {string} The message value.
-    */
+     * Gets the message.
+     *
+     * @returns {string} The message value.
+     */
     get message () {
       return this.getAttribute('message')
     }
 
     /**
-    * Sets the message.
-    *
-    * @param {string} value - The message.
-    */
+     * Sets the message.
+     *
+     * @param {string} value - The message.
+     */
     set message (value) {
       if (this.message !== value) {
         this.setAttribute('message', value)

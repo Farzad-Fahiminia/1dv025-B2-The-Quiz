@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
- /**
+/**
  * Define template.
  */
 const template = document.createElement('template')
@@ -80,92 +80,92 @@ template.innerHTML = `
 /**
  * Define custom element.
  */
- export class NicknameForm extends HTMLElement {
-    /**
-     * Creates an instance of the current type.
-     */
-    constructor () {
-      super()
+export class NicknameForm extends HTMLElement {
+  /**
+   * Creates an instance of the current type.
+   */
+  constructor () {
+    super()
 
-      // Attach a shadow DOM tree to this element and
-      // append the template to the shadow root.
-      this.attachShadow({ mode: 'open' })
-        .appendChild(template.content.cloneNode(true))
+    // Attach a shadow DOM tree to this element and
+    // append the template to the shadow root.
+    this.attachShadow({ mode: 'open' })
+      .appendChild(template.content.cloneNode(true))
 
-      // Get the input, datalist and article elements in the shadow root.
-      this._inputNickname = this.shadowRoot.querySelector('#nickname')
-      this._formElement = this.shadowRoot.querySelector('form')
+    // Get the input, datalist and article elements in the shadow root.
+    this._inputNickname = this.shadowRoot.querySelector('#nickname')
+    this._formElement = this.shadowRoot.querySelector('form')
 
-      // Bind event handlers of child elements.
-      this._onSubmit = this._onSubmit.bind(this)
+    // Bind event handlers of child elements.
+    this._onSubmit = this._onSubmit.bind(this)
 
-      this.arrayOfPlayers = []
+    this.arrayOfPlayers = []
 
-      this.player = {
-        nickname: '',
-        score: 0
-      }
-    }
-
-    /**
-     * Handles input event.
-     *
-     * @param {InputEvent|Event} event - The input event.
-     */
-    async _onInput (event) {
-      if (!(event instanceof InputEvent)) {
-        // Close the datalist.
-        this._inputNickname.blur()
-        this._inputNickname.focus()
-      }
-    }
-
-     /**
-     * Handles click events for submit button.
-     *
-     * @param {*} event - Listens to event.
-     */
-    _onSubmit (event) {
-      event.preventDefault()
-
-      this.player.nickname = this._inputNickname.value
-
-      if (localStorage.getItem('quiz_highscore') === null) {
-        localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers.concat(this.player)))
-      } else {
-        let arr = localStorage.getItem('quiz_highscore')
-        arr = JSON.parse(arr)
-        this.arrayOfPlayers = []
-        this.arrayOfPlayers = this.arrayOfPlayers.concat(arr, this.player)
-        localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers))
-
-        // Clear node before calling next component
-        const countdown = document.createElement('countdown-timer')
-        const questionForm = document.createElement('quiz-question')
-        const container = document.querySelector('#messageContainer')
-
-        while (container.firstChild) {
-          container.removeChild(container.firstChild);
-        }
-        container.appendChild(countdown)
-        container.appendChild(questionForm)
-      }
-    }
-
-    /**
-     * Called after the element is inserted into the DOM.
-     */
-    connectedCallback () {
-      this._inputNickname.addEventListener('input', this._onInput)
-      this._formElement.addEventListener('submit', this._onSubmit)
-    }
-
-    /**
-     * Called after the element has been removed from the DOM.
-     */
-    disconnectedCallback () {
-      this._inputNickname.removeEventListener('input', this._onInput)
-      this._formElement.removeEventListener('submit', this._onSubmit)
+    this.player = {
+      nickname: '',
+      score: 0
     }
   }
-  customElements.define('nickname-form', NicknameForm)
+
+  /**
+   * Handles input event.
+   *
+   * @param {InputEvent|Event} event - The input event.
+   */
+  async _onInput (event) {
+    if (!(event instanceof InputEvent)) {
+      // Close the datalist.
+      this._inputNickname.blur()
+      this._inputNickname.focus()
+    }
+  }
+
+  /**
+   * Handles click events for submit button.
+   *
+   * @param {*} event - Listens to event.
+   */
+  _onSubmit (event) {
+    event.preventDefault()
+
+    this.player.nickname = this._inputNickname.value
+
+    if (localStorage.getItem('quiz_highscore') === null) {
+      localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers.concat(this.player)))
+    } else {
+      let arr = localStorage.getItem('quiz_highscore')
+      arr = JSON.parse(arr)
+      this.arrayOfPlayers = []
+      this.arrayOfPlayers = this.arrayOfPlayers.concat(arr, this.player)
+      localStorage.setItem('quiz_highscore', JSON.stringify(this.arrayOfPlayers))
+
+      // Clear node before calling next component
+      const countdown = document.createElement('countdown-timer')
+      const questionForm = document.createElement('quiz-question')
+      const container = document.querySelector('#messageContainer')
+
+      while (container.firstChild) {
+        container.removeChild(container.firstChild)
+      }
+      container.appendChild(countdown)
+      container.appendChild(questionForm)
+    }
+  }
+
+  /**
+   * Called after the element is inserted into the DOM.
+   */
+  connectedCallback () {
+    this._inputNickname.addEventListener('input', this._onInput)
+    this._formElement.addEventListener('submit', this._onSubmit)
+  }
+
+  /**
+   * Called after the element has been removed from the DOM.
+   */
+  disconnectedCallback () {
+    this._inputNickname.removeEventListener('input', this._onInput)
+    this._formElement.removeEventListener('submit', this._onSubmit)
+  }
+}
+customElements.define('nickname-form', NicknameForm)

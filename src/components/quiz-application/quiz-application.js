@@ -10,9 +10,17 @@ import '../quiz-question'
 import '../countdown-timer'
 import '../high-score'
 
+/**
+ * The Game class.
+ *
+ * @class Game
+ */
 export class Game {
-  constructor () {
-  }
+  /**
+   * Starts the quiz game.
+   *
+   * @memberof Game
+   */
   startGame () {
     const div = document.querySelector('#messageContainer')
     const form = document.createElement('nickname-form')
