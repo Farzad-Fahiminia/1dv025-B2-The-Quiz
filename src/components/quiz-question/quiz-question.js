@@ -243,17 +243,32 @@ customElements.define('quiz-question',
      * @param {number} id - ID number for the URL answers.
      */
     async postAnswer (id) {
-      let data = await window.fetch(`${this._answerUrl}${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.question)
-      })
-      data = await data.json()
+      try {
+        let data = await window.fetch(`${this._answerUrl}${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.question)
+        })
+        data = await data.json()
 
-      this._questionUrl = data.nextURL
-      this.getQuestion(this._questionUrl)
+        if (data.nextURL) {
+          this._questionUrl = data.nextURL
+          this.getQuestion(this._questionUrl)
+        } else {
+          // Clear node before calling next component
+          const highscore = document.createElement('high-score')
+          const container = document.querySelector('#messageContainer')
+
+          while (container.firstChild) {
+            container.removeChild(container.firstChild)
+          }
+          container.appendChild(highscore)
+        }
+      } catch (error) {
+        throw new Error(error)
+      }
     }
 
     /**
