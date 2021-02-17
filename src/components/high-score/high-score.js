@@ -139,19 +139,9 @@ customElements.define('high-score',
         }
 
         if (this.highScore.length < 5) {
-          for (let i = 0; i < this.highScore.length; i++) {
-            const playerScore = `${this.highScore[i].nickname}: ${this.highScore[i].score} sec`
-            const p = document.createElement('p')
-            p.innerText = playerScore
-            elem.appendChild(p)
-          }
+          this.createPlayerScore(elem, this.highScore.length)
         } else {
-          for (let i = 0; i < 5; i++) {
-            const playerScore = `${this.highScore[i].nickname}: ${this.highScore[i].score} sec`
-            const p = document.createElement('p')
-            p.innerText = playerScore
-            elem.appendChild(p)
-          }
+          this.createPlayerScore(elem, 5)
         }
       }
     }
@@ -168,6 +158,21 @@ customElements.define('high-score',
      * Called after the element has been removed from the DOM.
      */
     disconnectedCallback () {
+    }
+
+    /**
+     * Creates high score list.
+     *
+     * @param {object} elem - High score DOM element.
+     * @param {number} length - The length of high score list.
+     */
+    createPlayerScore (elem, length) {
+      for (let i = 0; i < length; i++) {
+        const playerScore = `${this.highScore[i].nickname}: ${this.highScore[i].score} sec`
+        const p = document.createElement('p')
+        p.innerText = playerScore
+        elem.appendChild(p)
+      }
     }
   }
 )
