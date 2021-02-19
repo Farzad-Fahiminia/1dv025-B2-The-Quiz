@@ -274,7 +274,6 @@ customElements.define('quiz-question',
     /**
      * Start timer clock.
      *
-     * @param {number} time - Start time stamp.
      */
     startTimer () {
       // Reference https://stackoverflow.com/questions/41632942/how-to-measure-time-elapsed-on-javascript/41633001
