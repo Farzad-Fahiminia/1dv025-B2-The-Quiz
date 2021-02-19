@@ -276,7 +276,8 @@ customElements.define('quiz-question',
      *
      * @param {number} time - Start time stamp.
      */
-    startTimer (time) {
+    startTimer () {
+      // Reference https://stackoverflow.com/questions/41632942/how-to-measure-time-elapsed-on-javascript/41633001
       this.startTime = new Date()
     }
 
@@ -285,6 +286,7 @@ customElements.define('quiz-question',
      *
      */
     endTimer () {
+      // Reference https://stackoverflow.com/questions/41632942/how-to-measure-time-elapsed-on-javascript/41633001
       this.endTime = new Date()
       let timeDifference = this.endTime - this.startTime // in ms
       // strip the ms
