@@ -118,8 +118,8 @@ customElements.define('quiz-question',
       this._onSubmit = this._onSubmit.bind(this)
 
       this.question = { answer: '' }
-      this._answerUrl = 'http://courselab.lnu.se/answer/'
-      this._questionUrl = 'http://courselab.lnu.se/question/1'
+      this._answerUrl = 'https://courselab.lnu.se/answer/'
+      this._questionUrl = 'https://courselab.lnu.se/question/1'
     }
 
     /**
